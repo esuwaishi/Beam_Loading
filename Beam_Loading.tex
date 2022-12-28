@@ -20,31 +20,31 @@
 \tableofcontents
 %%\clearpage
 
-\part{数学的基礎}
-\chapter{フーリエ変換とラプラス変換}
-\section{周波数伝達関数}
+% \part{数学的基礎}
+% \chapter{フーリエ変換とラプラス変換}
+% \section{周波数伝達関数}
 
-時間領域における畳み込み積分
-%
-\begin{equation}
-    y(t) = g(t)*x(t) = \int_0^{\infty} g(\tau) x(t - \tau) d\tau
-\end{equation}
-%
-をフーリエ変換すると、
-%
-\begin{equation}
-    Y(j\omega) = G(j\omega) X(j\omega)
-\end{equation}
-%
-ただし、
-%
-\begin{equation}
-    \begin{split}
-        X(j\omega) = \int_{-\infty}^{\infty} x(t) e^{j\omega t} dt \\
-        Y(j\omega) = \int_{-\infty}^{\infty} y(t) e^{j\omega t} dt \\
-        G(j\omega) = \int_{-\infty}^{\infty} g(t) e^{j\omega t} dt
-    \end{split}
-\end{equation}
+% 時間領域における畳み込み積分
+% %
+% \begin{equation}
+%     y(t) = g(t)*x(t) = \int_0^{\infty} g(\tau) x(t - \tau) d\tau
+% \end{equation}
+% %
+% をフーリエ変換すると、
+% %
+% \begin{equation}
+%     Y(j\omega) = G(j\omega) X(j\omega)
+% \end{equation}
+% %
+% ただし、
+% %
+% \begin{equation}
+%     \begin{split}
+%         X(j\omega) = \int_{-\infty}^{\infty} x(t) e^{j\omega t} dt \\
+%         Y(j\omega) = \int_{-\infty}^{\infty} y(t) e^{j\omega t} dt \\
+%         G(j\omega) = \int_{-\infty}^{\infty} g(t) e^{j\omega t} dt
+%     \end{split}
+% \end{equation}
 
 \part{Beam Loading}
 \chapter{Static Beam Loading}
@@ -77,6 +77,42 @@
 \begin{equation}
     Z_2 = n^2 \cdot Z_1 
 \end{equation}
+
+\subsection{Available Power}
+%
+\begin{figure}[hbt]
+    \begin{center}
+        \includegraphics[width=12cm,clip]{figs/Available_Power.pdf}
+        \caption{理想的なトランスによる入力カップラー.}
+        \label{fig:Available_Power}
+    \end{center}
+\end{figure}
+%
+\begin{equation}
+    P_{diss} = \frac{1}{2}Y_c V_g^2
+\end{equation}
+%
+\begin{equation}
+    V_g = \frac{I_g}{Y_L}=\frac{I_g}{Y_g+Y_c}
+\end{equation}
+%
+\begin{equation}
+    P_{diss} = \frac{1}{2}\frac{Y_c}{(Y_g+Y_c)^2}I_g^2
+\end{equation}
+%
+\begin{equation}
+    \begin{split}
+        \frac{\partial P_{diss}}{\partial Y_c} &= \frac{1}{2}\frac{(Y_g + Y_c)^2 - 2Y_c(Y_g+Y_c)}{(Y_g+Y_c)^4} I_g^2 \\
+            &= \frac{1}{2}\frac{Y_g-Y_c}{(Y_g+Y_c)^3} I_g^2
+    \end{split}
+\end{equation}
+%
+$\partial P_{diss}/\partial Y_c = 0$より、$Y_g = Y_c$の時、$P_{diss}$は最大になり
+%
+\begin{equation}
+    P_{diss}^{max} = \frac{1}{8} Y_g I_g^2 = \frac{1}{8}\frac{R}{\beta}I_g^2 \equiv P_g
+\end{equation}
+
 
 
 \section{ビーム負荷付き空洞のRCL等価回路}
@@ -171,32 +207,32 @@
 
 \clearpage
 
+\section{Equations for cavity voltage}
+\begin{equation}
+    \begin{split}
+        \vb*{V}_c(t) &= \tilde{V}(t)e^{j\omega_c t},\qquad \tilde{V}(t) = \hat{V}(1+a_v(t))e^{j(\phi_v(t)+\psi_v)} \\
+        \vb*{I}_b(t) &= \tilde{I}_b(t) e^{j\omega_c t},\qquad \tilde{I}_b(t) = \hat{I}_b(1+a_b(t))e^{j(\phi_b(t)+\psi_b)} \\
+        \vb*{I}_g(t) &= \tilde{I}_g(t) e^{j\omega_c t},\qquad \tilde{I}_g(t) = \hat{I}_g(1+a_g(t))e^{j(\phi_g(t)+\psi_g)} \\
+        \vb*{I}_t(t) &= \vb*{I}_g(t) + \vb*{I}_b(t) = \tilde{I}_t(t) e^{j\omega_c t}
+    \end{split}
+\end{equation}
+%
+%
+\begin{equation}
+    \ddot{\vb*{V}_c}(t) + 2 \sigma \dot{\vb*{V}_c}(t) + \omega_0^2 \vb*{V}_c(t) = 2\sigma R \dot{\vb*{I}}_t(t)
+\end{equation}
+%
+\clearpage
+
 \section{Pedersen Model \cite{Pedersen} \cite{Ninomiya}}
 
-% \begin{figure}[hbt]
-%     \begin{center}
-%         \includegraphics[width=12cm,clip]{figs/Transfer_Function.pdf}
-%         \caption{伝達関数}
-%         \label{fig:TF}
-%     \end{center}
-% \end{figure}
-
-振幅変調$a(t)$や位相変調$\phi(t)$された正弦波信号を伝達関数$H(s)$を持つシステムに入力した場合，出力信号は一般に振幅変調と位相変調の両方を受けることになる。変調の振幅が十分小さい場合$(a \ll 1, \phi \ll 1)$の場合、変調の伝達は線形であり、以下のように決定される。
-
-角振動数$\omega_c$の正弦搬送波を振幅を$a(t)$、位相を$\phi(t)$で変調した入力信号$x(t)$を
-
-
-変調の伝達は、システムの伝達関数$Z(s)$から導き出すことができる。4つの変調伝達関数のセットを計算する必要があります。
-
-システム解析には、このような変調が増幅器と空洞共振器を介して伝達されることを知ることが必要です。完全な特性評価には4つの異なる伝達関数が必要です。
-
-低変調指数（$a \ll 1, p \ll 1$）の場合、変調のトランスミッションは線形であり、次式で決定される。
+振幅変調(AM)や位相変調(PM)された正弦波信号を伝達関数$H(s)$を持つシステムを介した場合、出力信号も一般に振幅変調と位相変調の両方を受けることになる。このようなシステムの完全な特性評価には、システムの伝達関数$H(s)$から導き出すことができる次の4つの異なる変調伝達関数(Modulation Transfer Function)を求める必要がある。(Fig.\ref{fig:PM})
 %
 \begin{enumerate}
-    \item $G_{aa}(s)$ : 入力の振幅変調が出力の振幅を変調する伝達関数
-    \item $G_{pp}(s)$ : 入力の位相変調が出力の位相を変調する伝達関数
-    \item $G_{ap}(s)$ : 入力の振幅変調が出力の位相を変調する伝達関数
-    \item $G_{pa}(s)$ : 入力の位相変量が出力の振幅を変調する伝達関数
+    \item 入力の振幅変調が出力の振幅を変調する伝達関数 : $G_{aa}(s)$
+    \item 入力の位相変調が出力の位相を変調する伝達関数 : $G_{pp}(s)$
+    \item 入力の振幅変調が出力の位相を変調する伝達関数 : $G_{ap}(s)$
+    \item 入力の位相変量が出力の振幅を変調する伝達関数 : $G_{pa}(s)$
 \end{enumerate}
 %
 \begin{figure}[hbt]
@@ -207,51 +243,35 @@
     \end{center}
 \end{figure}
 %
+変調の振幅が十分小さい場合、変調の伝送は線形であり、次のようにして求めることができる。
 
-これらの4つの変調伝達関数を求めるのだが、最初は、入力信号の振幅のみが$a_x(t)$で変調された場合を考える。このとき、入力信号$x(t)$は次のようにあらわせる。
+最初に、入力信号の振幅のみが$a_x(t)$で変調された場合を考える。このとき、入力信号$x(t)$は次のようにあらわせる。
 %
 \begin{equation}
-    x(t) = \Re[\hat{X}\{1 + a_x(t)\}e^{j\omega_c t}]
+    x(t) = \Re\left \{\hat{X}(1 + a_x(t))e^{j\omega_c t}\right \}
     \label{eq:in_am_sig1}
 \end{equation}
 %
-この入力信号がシステムの伝達関数$H(s)$を通じて出力される信号$y(t)$は$a_x(t)$によって振幅と位相が変調され次のようにあらわせる。
+出力信号$y(t)$は$a_x(t)$によって振幅だけでなく位相も変調され、
 %
 \begin{equation}
-    y(t) = \Re[\hat{Y}\{1 + a_{y,a}(t)\}e^{j(\omega_c t + \phi_0 + \phi_{y,a} (t))}]
+    y(t) = \Re\left \{\hat{Y}(1 + a_{y,a}(t))e^{j(\omega_c t + \phi_0 + \phi_{y,a} (t))}\right \}
     \label{eq:out_am_sig1}
 \end{equation}
 %
-次に、入力信号の位相のみが$\phi_x(t)$で変調された信号を考えると、次のようになる。
+と表すことができる。この時、入力の振幅変調に関する変調伝達関数$G_{aa}(s),\;G_{ap}(s)$は、
 %
 \begin{equation}
-    x(t) = \Re\{\hat{X} e^{j(\omega_ct + \phi_x(t))}\}
-    \label{eq:in_pm_sig1}
+    G_{aa}(s) =  \frac{a_{y, a}(s)}{a_x(s)}, \quad G_{ap}(s) =  \frac{\phi_{y, a}(s)}{a_x(s)}
+ \label{eq:am_tf}
 \end{equation}
 %
-このとき、出力信号は先程と同様に考えると、
-%
-\begin{equation}
-    y(t) = \Re\{\hat{Y}(1+a_{y, p}(t))e^{j(\omega_c t + \phi_0 + \phi_{y, p}(t))}\}
-    \label{eq:out_pm_sig1}
-\end{equation}
-%
-このとき、変調伝達関数$G_{aa}(s),\;G_{pp}(s).\;G_{ap}(s),\;G_{pa}(s)$は次のようあらわせる。
-%
-\begin{equation}
-    G_{aa}(s) =  \frac{a_{y, a}(s)}{a_x(s)}\; , \; G_{pp}(s) = \frac{\phi_{y, p}(s)}{\phi_x(s)}, \;
-    G_{ap}(s) =  \frac{a_{y, a}(s)}{a_x(s)}\; , \; G_{pa}(s) = \frac{\phi_{y, p}(s)}{\phi_x(s)}
- \label{eq:md_tf}
-\end{equation}
-%
-これら4つの変調伝達関数(modulation transfer function)を求めるため、変調の振幅が十分小さい場合$(a \ll 1, \phi \ll 1)$を考える。
-
-ここで、(\ref{eq:in_am_sig1})は、
+となる。ここで、(\ref{eq:in_am_sig1})は、
 %
 \begin{equation}
     \begin{split}
-        x(t) &= \Re\{\hat{X}(1 + a_x(t))e^{j\omega_c t}\} 
-            = \hat{X}(\cos\omega_c t + a_x(t) \cos\omega_c t) \\
+        x(t) &= \Re\{\hat{X}(1 + a_x(t))e^{j\omega_c t}\} \\
+            &= \hat{X}(\cos\omega_c t + a_x(t) \cos\omega_c t) \\
             &=  \frac{\hat{X}}{2}\left \{(e^{j\omega_c t}+e^{-j\omega_c t})+a_x(t)(e^{j\omega_c t} + e^{-j\omega_c t}) \right \}
             \label{eq:in_am_sig2}
     \end{split}
@@ -260,45 +280,44 @@
 $X(s)=\mathcal{L}\{x(t)\},\; a_x(s) = \mathcal{L}\{a_x(s)\}$とし、(\ref{eq:in_am_sig2})をラプラス変換すると、
 %
 \begin{equation}
-    X(s) = \frac{\hat{X}}{2}\left \{\frac{1}{s-j\omega_c}+\frac{1}{s+j\omega_c} + a_x(s - j\omega_c)+a_x(s+j\omega_c) \right \}
+    \begin{split}
+        X(s) &= \frac{\hat{X}}{2}\left \{\frac{1}{s-j\omega_c} 
+        + \frac{1}{s+j\omega_c} + a_x(s - j\omega_c)+a_x(s+j\omega_c) \right \} \\
+            &= \hat{X}\left \{\frac{s}{s^2 + \omega_c^2} 
+            + a_x(s - j\omega_c)+a_x(s+j\omega_c) \right \}
+    \end{split}
     \label{eq:lt_in_sig2}
 \end{equation}
 %
-いま、変調の振幅が十分小さい時、つまり、$a_{y, a}(t) \ll 1,\; \phi_{y, a}(t) \ll 1$の時、二次の微少量を無視すると、(\ref{eq:out_am_sig1})は、
+変調の振幅が十分小さい場合、つまり、$a_{y, a}(t) \ll 1,\; \phi_{y, a}(t) \ll 1$の時、二次の微少量を無視すると(\ref{eq:out_am_sig1})は、
 %
 \begin{equation}
     \begin{split}
-        y(t) &\simeq \Re\left [\hat{Y}\{1 + a_{y, a}(t)\}\{1 + j \phi_{y, a} (t)\}e^{j(\omega_c t +  \phi_0)}\right ] \\ 
+        y(t) &= \Re\left \{\hat{Y}(1 + a_{y,a}(t))e^{j(\omega_c t + \phi_0 + \phi_{y,a} (t))}\right \} \\
+        &\simeq \Re\left \{\hat{Y}(1 + a_{y, a}(t))\{1 + j \phi_{y, a} (t)\}e^{j(\omega_c t +  \phi_0)}\right \} \\ 
         &\simeq\Re{\hat{Y}(1 + a_{y, a}(t)+ j \phi_{y, a} (t))e^{j(\omega_c t +  \phi_0)}} \\ 
         &= \hat{Y}\left \{(1+ a_{y,a}(t))\cos(\omega_c t +  \phi_0) 
         - \phi_{y, a}(t)\sin(\omega_c t +  \phi_0) \right \} \\
-        &= \frac{\hat{Y}}{2}\left [\left (1+a_{y,a}(t)\right )\left \{e^{j(\omega_c t 
-        + \phi_0)}+e^{-j(\omega_c t+\phi_0)}\right \}
-        +j \phi_{y,a}(t)\left \{e^{j(\omega_c t+\phi_0)}-e^{-j(\omega_c t + \phi_0)}\right \} \right ]
-        \label{eq:out_sig2}
+        &= \frac{\hat{Y}}{2}\left \{\left (1+a_{y,a}(t)\right )\left (e^{j(\omega_c t 
+        + \phi_0)}+e^{-j(\omega_c t+\phi_0)}\right )
+        +j \phi_{y,a}(t)\left (e^{j(\omega_c t+\phi_0)}-e^{-j(\omega_c t + \phi_0)}\right ) \right \}
+        \label{eq:out_pm_sig2}
     \end{split}
 \end{equation}
 %
-同様にして、(\ref{eq:out_sig2})をラプラス変換すると、
+(\ref{eq:out_pm_sig2})をラプラス変換すると、
 %
 \begin{multline}
     Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{e^{j\phi_0}}{s-j\omega_c}+\frac{e^{-j\phi_0}}{s+j\omega_c} 
     + e^{j\phi_0}a_{y, a}(s - j\omega_c) + e^{-j\phi_0}a_{y, a}(s+j\omega_c) \\
     + j\left \{e^{j\phi_0}\phi_{y,a}(s-j\omega_c) - e^{-j\phi_0}\phi_{y,a}(s+j\omega_c) \right \} \biggl ]
-    \label{eq:lt_out_sig2}
+    \label{eq:lt_out_am_sig2}
 \end{multline}
 %
-ここで、(\ref{eq:md_tf})より
-%
-\begin{equation}
-    a_{y, a}(s) = G_{aa}(s) a_x(s)\; , \quad \phi_{y, a}(s) = G_{ap}(s)a_x(s)
-    \label{eq:gaa_gap}
-\end{equation}
-%
-(\ref{eq:gaa_gap})を(\ref{eq:lt_out_sig2})に代入すると、
+ここで、(\ref{eq:am_tf})より(\ref{eq:lt_out_am_sig2})は
 %
 \begin{multline}
-    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{e^{j\phi_0}}{s-j\omega_c}+\frac{e^{-j\phi_0}}{s+j\omega_c} \\
+    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{e^{j\phi_0}(s+j\omega_c) + e^{-j\phi_0}(s-j\omega_c)}{s^2 + \omega_c^2}\\
         + e^{j\phi_0}G_{aa}(s-j\omega_c)a_x(s - j\omega_c) + e^{-j\phi_0}G_{aa}(s+j\omega_c)a_x(s+j\omega_c) \\
         + j\left \{e^{j\phi_0}G_{ap}(s-j\omega_c)a_x(s-j\omega_c) 
         - e^{-j\phi_0}G_{ap}(s+j\omega_c)a_x(s+j\omega_c) \right \} \biggl ]\notag 
@@ -307,64 +326,87 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_x(s) = \mathcal{L}\{a_x(s)\}$とし、(\ref{eq:in
 したがって、
 %
 \begin{multline}
-    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{e^{j\phi_0}}{s-j\omega_c}+\frac{e^{-j\phi_0}}{s+j\omega_c} 
+    Y(s) = \hat{Y}\biggr [\frac{\cos\phi_0 s - \omega_c\sin\phi_0}{s^2+\omega_c^2}
     + e^{j\phi_0}\{G_{aa}(s-j\omega_c)+j G_{ap}(s-j\omega_c)\}a_x(s-j\omega_c) \\
     + e^{-j\phi_0}\{G_{aa}(s+j\omega_c)- j G_{ap}(s+j\omega_c)\}a_x(s+j\omega_c)\biggl ]
-    \label{eq:lt_out_sig3}
+    \label{eq:lt_out_am_sig3}
 \end{multline}
 %
-ここで、$Y(s) = H(s) X(s)$より、
+ここで$Y(s) = H(s) X(s)$より、
 %
 \begin{equation}
-    Y(s) = \frac{\hat{X}}{2} \biggl [\frac{1}{s-j\omega_c}+\frac{1}{s+j\omega_c} + a_x(s - j\omega_c) + a_x(s+j\omega_c)  \biggr ] H(s)
-    \label{eq:lt_out_sig4}
+    Y(s) = \hat{X}\biggl [\frac{s}{s^2+\omega_c^2} + a_x(s - j\omega_c) + a_x(s+j\omega_c)  \biggr ] H(s)
+    \label{eq:lt_out_am_sig4}
 \end{equation}
 %
-(\ref{eq:lt_out_sig3})と(\ref{eq:lt_out_sig4})で、係数を比較すると、
+(\ref{eq:lt_out_am_sig3})と(\ref{eq:lt_out_am_sig4})で係数を比較すると、
 %
-\begin{equation} 
-    \hat{Y}\left(\frac{e^{j\phi_0}}{s-j\omega_c} + \frac{e^{-j\phi_0}}{s+j\omega_c} \right) =
-    \hat{X}\left(\frac{1}{s-j\omega_c} + \frac{1}{s+j\omega_c}  \right) H(s) \\
+\begin{equation}
+    \hat{Y}(\cos\phi_0 s - \omega_c\sin\phi_0) = \hat{X}H(s) s 
     \label{eq:coef1}
 \end{equation}
 %
 \begin{equation}
     \begin{split}
         G_{aa}(s-j\omega_c) + j G_{ap}(s-j\omega_c) &= \frac{\hat{X}}{\hat{Y}}e^{-j\phi_0}H(s) \\
-        G_{aa}(s+j\omega_c) - j G_{ap}(s+j\omega_c) &= \frac{\hat{X}}{\hat{Y}}e^{j\phi_0}H(s) 
+        G_{aa}(s+j\omega_c) - j G_{ap}(s+j\omega_c) &= \frac{\hat{X}}{\hat{Y}}e^{j\phi_0}H(s)
     \end{split}
+    \label{eq:gaa_gap1}
 \end{equation}
 %
-(\ref{eq:coef1})を整理すると、
+(\ref{eq:coef1})より
 %
 \begin{equation}
-    H(s) = \frac{2\hat{Y}}{\hat{X}}\left\{e^{j\phi_0}(s+j\omega_c)+e^{-j\phi_0}(s-j\omega_c)\right\} s
+    H(\pm j\omega_c) = \frac{\hat{Y}}{\hat{X}} e^{\pm j\phi_0}
+    \label{eq:h_pm_jw}
 \end{equation}
 %
-したがって、
+(\ref{eq:gaa_gap1})と(\ref{eq:h_pm_jw})より、
 %
 \begin{equation}
     \begin{split}
         G_{aa}(s) + j G_{ap}(s) &= \frac{H(s+j\omega_c)}{H(j\omega_c)} \\
-        G_{aa}(s) - j G_{ap}(s) &= \frac{H(s-j\omega_c)}{H(-j\omega_c)} \\
+        G_{aa}(s) - j G_{ap}(s) &= \frac{H(s-j\omega_c)}{H(-j\omega_c)}
     \end{split}
+    \label{eq:gaa_gap2}
 \end{equation}
 %
-これらより、
+以上より、入力の振幅変調に関する変調伝達関数$G_{aa}(s),\;G_{ap}(s)$は、
 %
 \begin{equation}
     \begin{split}
-        G_{aa}(s) &= \frac{1}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} + \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\} \\
-        G_{ap}(s) &= \frac{-j}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} - \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\}
+        G_{aa}(s) &= \frac{1}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} + \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\} = G_s(s)\\
+        G_{ap}(s) &= \frac{-j}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} - \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\} = G_c(s)
     \end{split}
 \end{equation}
-%
 
-つぎに、$\phi_x(t) \ll 1$より、(\ref{eq:in_pm_sig1})は、
+
+今度は、入力信号の位相のみが$\phi_x(t)$で変調された信号を考えると、
+%
+\begin{equation}
+    x(t) = \Re\{\hat{X} e^{j(\omega_ct + \phi_x(t))}\}
+    \label{eq:in_pm_sig1}
+\end{equation}
+%
+出力信号は先程と同様に考えると、
+%
+\begin{equation}
+    y(t) = \Re\{\hat{Y}(1+a_{y, p}(t))e^{j(\omega_c t + \phi_0 + \phi_{y, p}(t))}\}
+    \label{eq:out_pm_sig1}
+\end{equation}
+%
+入力の位相変調に関する変調伝達関数$G_{pp}(s),\;G_{pa}(s)$は、
+%
+\begin{equation}
+    G_{pp}(s) = \frac{\phi_{y, p}(s)}{\phi_x(s)}, \quad G_{pa}(s) = \frac{a_{y, p}(s)}{\phi_x(s)}
+ \label{eq:pm_tf}
+\end{equation}
+%
+(\ref{eq:in_pm_sig1})は、$\phi_x(t) \ll 1$より、
 %
 \begin{equation}
     \begin{split}
-        x(t) &= \Re\{\hat{X} e^{j(\omega_ct + \phi_x(t))}\} \\
+        x(t) &= \Re\{\hat{X} e^{j(\omega_c t + \phi_x(t))}\} \\
             &\simeq \Re\{\hat{X}(1+j\phi_x(t)) e^{j\omega_c t}\} \\
             &= \hat{X} (\cos\omega_c t - \phi_x(t)\sin\omega_c t ) \\
             &= \frac{\hat{X}}{2}\{(e^{j\omega_c t} + e^{-j\omega_c t}) + j \phi_x(t)(e^{j\omega_c t} - e^{-j\omega_c t})\} 
@@ -375,50 +417,43 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_x(s) = \mathcal{L}\{a_x(s)\}$とし、(\ref{eq:in
 (\ref{eq:in_pm_sig2})をラプラス変換すると、
 %
 \begin{equation}
-    X(s) = \frac{\hat{X}}{2}\left [\frac{1}{s-j\omega_c}+\frac{1}{s+j\omega_c} 
+    X(s) = \hat{X}\left [\frac{s}{s^2+\omega_c^2} 
     + j \left \{\phi_x(s - j\omega_c) - \phi_x(s+j\omega_c)\right \} \right ]
     \label{eq:lt_in_pm_sig2}
 \end{equation}
 %
-(\ref{eq:lt_out_sig2})と同様にして(\ref{eq:out_pm_sig1})もラプラス変換すると、
+(\ref{eq:lt_out_am_sig2})と同様にして(\ref{eq:out_pm_sig1})もラプラス変換すると、
 %
 \begin{multline}
-    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{e^{j\phi_0}}{s-j\omega_c}+\frac{e^{-j\phi_0}}{s+j\omega_c} 
+    Y(s) = \hat{Y}\biggr [\frac{\cos\phi_0 s - \omega_c\sin\phi_0}{s^2+\omega_c^2}
         + e^{j\phi_0}a_{y, p}(s - j\omega_c) + e^{-j\phi_0}a_{y, p}(s+j\omega_c) \\
         + j\left \{e^{j\phi_0}\phi_{y,p}(s-j\omega_c) - e^{-j\phi_0}\phi_{y,p}(s+j\omega_c) \right \} \biggl ]
         \label{eq:lt_out_pm_sig2}
 \end{multline}
 %
-ここで、(\ref{eq:md_tf})より
-%
-\begin{equation}
-    \phi_{y, p}(s) = G_{pp}(s){\phi_x(s)}\; , \quad a_{y, p}(s) = G_{pa}(s)\phi_x(s)
-    \label{eq:gpp_gpa}
-\end{equation}
-%
-となるので、(\ref{eq:gpp_gpa})を(\ref{eq:lt_out_pm_sig2})に代入して整理すると、
+同様に(\ref{eq:lt_out_pm_sig2})は
 %
 \begin{multline}
-    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{e^{j\phi_0}}{s-j\omega_c}+\frac{e^{-j\phi_0}}{s+j\omega_c} 
-    + e^{j\phi_0}\{G_{pa}(s-j\omega_c)+j G_{pp}(s-j\omega_c)\}a_x(s-j\omega_c) \\
-    + e^{-j\phi_0}\{G_{pa}(s+j\omega_c)- j G_{pp}(s+j\omega_c)\}a_x(s+j\omega_c)\biggl ]
+    Y(s) = \hat{Y}\biggr [\frac{\cos\phi_0 s - \omega_c\sin\phi_0}{s^2+\omega_c^2}
+    + e^{j\phi_0}\{G_{pa}(s-j\omega_c)+j G_{pp}(s-j\omega_c)\}\phi_x(s-j\omega_c) \\
+    + e^{-j\phi_0}\{G_{pa}(s+j\omega_c)- j G_{pp}(s+j\omega_c)\}\phi_x(s+j\omega_c)\biggl ]
     \label{eq:lt_out_pm_sig3}
 \end{multline}
 %
-ここで、$Y(s) = H(s) X(s)$より、
+ここで$Y(s) = H(s) X(s)$より、
 %
 \begin{equation}
-    Y(s) = \frac{\hat{X}}{2}\left [\frac{1}{s-j\omega_c}+\frac{1}{s+j\omega_c} 
-    + j \left \{\phi_x(s - j\omega_c) - \phi_x(s+j\omega_c)\right \} \right ] H(s)
+    Y(s) = \hat{X} \biggl [\frac{s}{s^2+\omega_c^2}
+    + j \left \{\phi_x(s - j\omega_c) - \phi_x(s+j\omega_c)\right \}  \biggr ] H(s)
     \label{eq:lt_out_pm_sig4}
 \end{equation}
 %
-(\ref{eq:lt_out_pm_sig3})と(\ref{eq:lt_out_pm_sig4})で、係数を比較すると、
+(\ref{eq:lt_out_pm_sig3})と(\ref{eq:lt_out_pm_sig4})で係数を比較すし、(\ref{eq:h_pm_jw})を使うと、
 %
 \begin{equation}
     \begin{split}
-        G_{pa}(s-j\omega_c) + j G_{pp}(s-j\omega_c) &= j \frac{\hat{X}}{\hat{Y}}e^{-j\phi_0}H(s) \\
-        G_{aa}(s+j\omega_c) - j G_{ap}(s+j\omega_c) &= -j \frac{\hat{X}}{\hat{Y}}e^{j\phi_0}H(s) 
+        G_{pa}(s-j\omega_c) + j G_{pp}(s-j\omega_c) &= j \frac{H(s)}{H(j\omega_c)} \\
+        G_{pa}(s+j\omega_c) - j G_{pp}(s+j\omega_c) &= -j \frac{H(s)}{H(-j\omega_c)} 
     \end{split}
 \end{equation}
 %
@@ -426,17 +461,8 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_x(s) = \mathcal{L}\{a_x(s)\}$とし、(\ref{eq:in
 %
 \begin{equation}
     \begin{split}
-        G_{pa}(s) + j G_{pp}(s) &= j \frac{H(s+j\omega_c)}{H(j\omega_c)} \\
-        G_{pa}(s) - j G_{pp}(s) &= -j \frac{H(s-j\omega_c)}{H(-j\omega_c)} \\
-    \end{split}
-\end{equation}
-%
-これらより、
-%
-\begin{equation}
-    \begin{split}
-        G_{pp}(s) &= \frac{1}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} + \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\} \\
-        G_{pa}(s) &= \frac{j}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} - \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\}
+         G_{pa}(s) + j G_{pp}(s) &= j \frac{H(s+j\omega_c)}{H(j\omega_c)} \\
+        G_{pa}(s) - j G_{pp}(s) &= -j \frac{H(s-j\omega_c)}{H(-j\omega_c)} 
     \end{split}
 \end{equation}
 %
@@ -449,6 +475,50 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_x(s) = \mathcal{L}\{a_x(s)\}$とし、(\ref{eq:in
         G_{ap}(s) &= -G_{pa}(s) 
         = \frac{j}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} - \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\} = G_c(s)
     \end{split}
+\end{equation}
+%
+
+\appendix
+\chapter{加速空洞の等価回路}
+\section{RLC並列共振回路の微分方程式}
+%
+\begin{figure}[hbt]
+    \begin{center}
+        \includegraphics[width=12cm,clip]{figs/RLC_Model.pdf}
+        \caption{Cavity RLC Model}
+        \label{fig:RLC}
+    \end{center}
+\end{figure}
+%
+\begin{equation}
+    \begin{split}
+        I(t) &= I_R(t) + I_L(t) + I_C(t) \\
+        I_R(t) &= \frac{V(t)}{R}, \; I_L(t) = \frac{1}{L}\int V(t) dt, \; I_c(t) = C\frac{dV(t)}{dt}
+    \end{split}
+\end{equation}
+%
+したがって、
+%
+\begin{equation}
+    \frac{V(t)}{R} + \frac{1}{L}\int V(t) dt + C\frac{dV(t)}{dt} = I(t)
+\end{equation}
+%
+両辺を時間$t$で微分すると、
+%
+\begin{equation}
+    \frac{\dot{V}(t)}{R} + \frac{V(t)}{L}+ C \ddot{V(t)} = \dot{I(t)}
+\end{equation}
+%
+\begin{equation}
+    \ddot{V}(t) + \frac{1}{CR}\dot{V}(t) + \frac{1}{LC} V(t) = \frac{1}{C}\dot{I}(t)
+\end{equation}
+%
+\begin{equation}
+    \omega_0^2 = \frac{1}{LC}, \qquad \sigma = \frac{R}{2}\sqrt{\frac{C}{L}} = \frac{\omega_0}{2Q_L}
+\end{equation}
+%
+\begin{equation}
+    \ddot{V}(t) + 2 \sigma \dot{V}(t) + \omega_0^2 V(t) = 2\sigma R \dot{I}(t)
 \end{equation}
 %
 \begin{thebibliography}{9}
