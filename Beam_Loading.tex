@@ -212,123 +212,10 @@ $\partial P_{diss}/\partial Y_c = 0$より、$Y_g = Y_c$の時、$P_{diss}$は�
 %
 \clearpage
 
-\section{変調}
-\subsection{定義とベクトル表記}
-高周波の搬送波で情報を伝送するには変調が必要である。実際、信号が時間の純粋な正弦関数から外れるたびに変調が行われる。
-
-振幅(a(t))と位相(p(t))で変調された$\omega_c$における搬送波正弦波の時間依存性は次式で表される:
-%
-\begin{equation}
-    x(t) = \Re{\hat{X}(1+a(t))e^{j(\omega_c t + \phi(t))}}
-\end{equation}
-%
-純粋な正弦波変調の場合:
-%
-\begin{equation}
-    x(t) = \Re{\hat{X}(1 + \hat{a}\cos\omega_{\mathrm{AM}}t)e^{j(\omega_c t + \hat{\phi}\sin\omega_{\mathrm{PM}}t)}}
-\end{equation}
-
-
-\clearpage
-
 \section{Pedersen Model}
-\subsection{空洞を介した位相、振幅、チューニング伝送}
-
-
-
-伝達関数(インピーダンス)Z(s)を通して送信する場合、出力信号は一般的に振幅変調と位相変調の両方になります：
-
-
-
-位相および振幅が変調された正弦波信号は次のように表せる。
-
-
-
-
-位相および振幅変調された正弦波信号を送信する場合：
-
-
-$a_i(t)$で振幅変調され、$\phi(t)$で位相変調された角振動数$\omega_c$の正弦波信号は、次のように表される。
-%
-\begin{equation}
-    x(t) = \Re{A_i(1+a_i(t))e^{j(\omega_c t+\phi_i(t))}}
-    \label{eq:in_sig1}
-\end{equation}
-%
-$a_i \ll 1,\; \phi_i \ll 1$の場合、(\ref{eq:in_sig1})は
-%
-\begin{align}
-    x(t) & \simeq \Re{A_i(1 + a_i(t))(1 + j\phi_i(t))e^{j\omega_c t}}                                \notag \\
-         & = \Re{A_i(1 + a_i(t) + j\phi_i(t) + j\underset{0}{\uwave{a_i(t)\phi(t)}})e^{j\omega_c t}} \notag \\
-         & \simeq \Re{A_i(1 + a_i(t) + j\phi_i(t))e^{j\omega_c t}}\notag                                    \\
-         & = \Re{A_i(1 + a_i(t) + j\phi_i(t))(\cos\omega_c t + j\sin\omega_c t)} \notag                     \\
-         & = A_i(\cos\omega_c t + a_i(t)\cos\omega_c t - \phi(t)\sin\omega_c t)
-    \label{eq:in_sig2}
-\end{align}
-%
-ここで、
-%
-\begin{equation}
-    \begin{split}
-        \mathcal{L} [\cos\omega_c t] &= \frac{1}{2}\mathcal{L}[(e^{j\omega_c t}+e^{-j\omega_c t})]\\
-        &= \frac{1}{2}\left(\int_0^\infty e^{j\omega_c t} e^{-st} dt + \int_0^\infty e^{-j\omega_c t} e^{-st} dt \right)\\
-        &= \frac{1}{2}\left(\int_0^\infty e^{-(s-j\omega_c) t} dt + \int_0^\infty e^{-(s+j\omega_c) t} dt \right)\\
-        &= \frac{1}{2}\left(\left[\frac{e^{-(s-j\omega_c) t}}{-(s-j\omega_c)}\right]_0^\infty +
-        \left[\frac{e^{-(s+j\omega_c) t}}{-(s+j\omega_c)}\right]_0^\infty \right)\\
-        &= \frac{1}{2}\left( \frac{1}{s-j\omega_c}+\frac{1}{s+j\omega_c}\right)\\
-        &= \frac{s}{s^2+\omega_c^2}
-    \end{split}
-\end{equation}
-%
-% \begin{equation}
-%     \begin{split}
-%         \mathcal{L} [\sin\omega_c t] &= \frac{1}{2j}\mathcal{L}[(e^{j\omega_c t}-e^{-j\omega_c t})]\\
-%         &= \frac{1}{2j}\left(\int_0^\infty e^{j\omega_c t} e^{-st} dt -\int_0^\infty e^{-j\omega_c t} e^{-st} dt \right)\\
-%         &= \frac{1}{2j}\left(\int_0^\infty e^{-(s-j\omega_c) t} dt - \int_0^\infty e^{-(s+j\omega_c) t} dt \right)\\
-%         &= \frac{1}{2j}\left(\left[\frac{e^{-(s-j\omega_c) t}}{-(s-j\omega_c)}\right]_0^\infty -
-%         \left[\frac{e^{-(s+j\omega_c) t}}{-(s+j\omega_c)}\right]_0^\infty \right)\\
-%         &= \frac{1}{2j}\left( \frac{1}{s-j\omega_c}-\frac{1}{s+j\omega_c}\right)\\
-%         &= \frac{\omega_c}{s^2+\omega_c^2}
-%     \end{split}
-% \end{equation}0
-%
-また、$\mathcal{L}\{a_i(t)\} = a_i(s),\; \mathcal{L}\{\phi_i(t)\} = \phi_i(s)$とすると、
-%
-\begin{equation}
-    \begin{split}
-        \mathcal{L} [a_i(t)\cos\omega_c t] &= \frac{1}{2}\mathcal{L}[(a_i(t) e^{j\omega_c t}+a_i(t) e^{-j\omega_c t})]\\
-        &= \frac{1}{2}\left(\int_0^\infty a_i(t) e^{j\omega_c t} e^{-st} dt + \int_0^\infty a_i(t) e^{-j\omega_c t} e^{-st} dt \right)\\
-        &= \frac{1}{2}\left(\int_0^\infty a_i(t) e^{-(s-j\omega_c) t} dt + \int_0^\infty a_i(t) e^{-(s+j\omega_c) t} dt \right)\\
-        &= \frac{a_i(s-j\omega_c) + a_i(s+j\omega_c)}{2}
-    \end{split}
-\end{equation}
-%
-\begin{equation}
-    \begin{split}
-        \mathcal{L} [\phi_i(t)\sin\omega_c t] &= \frac{1}{2j}\mathcal{L}[(\phi_i(t) e^{j\omega_c t} - \phi_i(t) e^{-j\omega_c t})]\\
-        &= \frac{1}{2j}\left(\int_0^\infty \phi_i(t) e^{j\omega_c t} e^{-st} dt -
-        \int_0^\infty \phi_i(t) e^{-j\omega_c t} e^{-st} dt \right)\\
-        &= \frac{1}{2j}\left(\int_0^\infty \phi_i(t) e^{-(s-j\omega_c) t} dt -
-        \int_0^\infty \phi_i(t) e^{-(s+j\omega_c) t} dt \right)\\
-        &= \frac{\phi_i(s-j\omega_c) - \phi_i(s+j\omega_c)}{2j}
-    \end{split}
-\end{equation}
-%
-以上より、$X(s) = \mathcal{L}\{x(t)\}$とし、(\ref{eq:in_sig2})をラプラス変換すると、
-%
-\begin{equation}
-    X(s) = A_i\left\{ \frac{s}{s^2+\omega_c^2}
-    + \frac{a_i(s-j\omega_c) + a_i(s+j\omega_c)}{2}
-    -  \frac{\phi_i(s-j\omega_c) - \phi_i(s+j\omega_c)}{2j} \right\}
-\end{equation}
-
-\begin{equation}
-    y(t) = \Re{A_o(1+a_o(t))e^{j(\omega_c t+\phi_z + \phi_o(t))}}
-\end{equation}
-
 \subsection{Modulation Transfer Function}
-
-振幅変調(AM)や位相変調(PM)された正弦波信号を伝達関数$H(s)$を持つシステムを介した場合、出力信号も一般に振幅変調と位相変調の両方を受けることになる。このようなシステムの完全な特性評価には、システムの伝達関数$H(s)$から導き出すことができる次の4つの異なる変調伝達関数(Modulation Transfer Function)を求める必要がある。(Fig.\ref{fig:PM})
+%
+振幅変調(AM)や位相変調(PM)された正弦波信号を伝達関数$H(s)$を持つシステムを介した場合、出力信号も一般に振幅変調と位相変調の両方を受けることになる。このようなシステムの完全な特性評価には、システムの伝達関数$H(s)$から導き出すことができる次の4つの異なる変調伝達関数(Modulation Transfer Function)を求める必要がある。(Fig.\ref{fig:MTF})
 %
 \begin{enumerate}
     \item 入力の振幅変調が出力の振幅を変調する伝達関数 : $G_{aa}(s)$
@@ -339,9 +226,9 @@ $a_i \ll 1,\; \phi_i \ll 1$の場合、(\ref{eq:in_sig1})は
 %
 \begin{figure}[hbt]
     \begin{center}
-        \includegraphics[width=8cm,clip]{figs/Pedersen_Model.pdf}
-        \caption{Pedersen Model}
-        \label{fig:PM}
+        \includegraphics[width=8cm,clip]{figs/Mod_Trans_Func.pdf}
+        \caption{Modulation Transfer Function.}
+        \label{fig:MTF}
     \end{center}
 \end{figure}
 %
@@ -349,10 +236,11 @@ $a_i \ll 1,\; \phi_i \ll 1$の場合、(\ref{eq:in_sig1})は
 
 最初に、入力信号の振幅のみが$a_i(t)$で変調された場合を考える。このとき、入力信号$x(t)$は次のようにあらわせる。
 %
-\begin{equation}
-    x(t) = \Re\left \{\hat{X}(1 + a_i(t))e^{j\omega_c t}\right \}
+\begin{align}
+    x(t) & = \Re\left \{\hat{X}(1 + a_i(t))e^{j\omega_c t}\right \}\notag   \\
+         & = \hat{X}\left \{\cos\omega_c t + a_i(t) \cos\omega_c t\right \}
     \label{eq:in_am_sig1}
-\end{equation}
+\end{align}
 %
 出力信号$y(t)$は$a_i(t)$によって振幅だけでなく位相も変調され、
 %
@@ -361,83 +249,122 @@ $a_i \ll 1,\; \phi_i \ll 1$の場合、(\ref{eq:in_sig1})は
     \label{eq:out_am_sig1}
 \end{equation}
 %
-と表すことができる。この時、入力の振幅変調に関する変調伝達関数$G_{aa}(s),\;G_{ap}(s)$は、
+と表すことができる。この時、変調伝達関数$G_{aa}(s),\;G_{ap}(s)$は、次のように定義される。
 %
 \begin{equation}
-    G_{aa}(s) =  \frac{a_{o, a}(s)}{a_i(s)}, \quad G_{ap}(s) =  \frac{\phi_{o, a}(s)}{a_i(s)}
+    G_{aa}(s) =  \frac{\hat{a}_{o, a}(s)}{\hat{a}_i(s)}, \quad G_{ap}(s) =  \frac{\hat{\phi}_{o, a}(s)}{\hat{a}_i(s)}
     \label{eq:am_tf}
 \end{equation}
 %
-となる。ここで、(\ref{eq:in_am_sig1})は、
+ここで、
+%
+\begin{align}
+    \mathcal{L} [\cos\omega_c t]
+     & = \frac{1}{2}\mathcal{L}[(e^{j\omega_c t}+e^{-j\omega_c t})]\notag                                                    \\
+     & = \frac{1}{2}\left(\int_0^\infty e^{j\omega_c t} e^{-st} dt + \int_0^\infty e^{-j\omega_c t} e^{-st} dt \right)\notag \\
+     & = \frac{1}{2}\left(\int_0^\infty e^{-(s-j\omega_c) t} dt + \int_0^\infty e^{-(s+j\omega_c) t} dt \right)\notag        \\
+     & = \frac{1}{2}\left(\left[\frac{e^{-(s-j\omega_c) t}}{-(s-j\omega_c)}\right]_0^\infty +
+    \left[\frac{e^{-(s+j\omega_c) t}}{-(s+j\omega_c)}\right]_0^\infty \right)\notag                                          \\
+     & = \frac{1}{2}\left( \frac{1}{s-j\omega_c}+\frac{1}{s+j\omega_c}\right)
+    = \frac{s}{s^2+\omega_c^2}
+\end{align}
+%
+また、$\mathcal{L}\{a_i(t)\} = \hat{a}_i(s)$とすると、
+%
+\begin{align}
+    \mathcal{L} [a_i(t)\cos\omega_c t]
+     & = \frac{1}{2}\mathcal{L}[(a_i(t) e^{j\omega_c t}+a_i(t) e^{-j\omega_c t})]\notag                                                    \\
+     & = \frac{1}{2}\left(\int_0^\infty a_i(t) e^{j\omega_c t} e^{-st} dt + \int_0^\infty a_i(t) e^{-j\omega_c t} e^{-st} dt \right)\notag \\
+     & = \frac{1}{2}\left(\int_0^\infty a_i(t) e^{-(s-j\omega_c) t} dt + \int_0^\infty a_i(t) e^{-(s+j\omega_c) t} dt \right)\notag        \\
+     & = \frac{1}{2}\{\hat{a}_i(s-j\omega_c) + \hat{a}_i(s+j\omega_c)\}
+\end{align}
+%
+$X(s)=\mathcal{L}\{x(t)\}$とし、(\ref{eq:in_am_sig1})をラプラス変換すると、
 %
 \begin{equation}
-    \begin{split}
-        x(t) &= \Re\{\hat{X}(1 + a_i(t))e^{j\omega_c t}\} \\
-        &= \hat{X}(\cos\omega_c t + a_i(t) \cos\omega_c t) \\
-        &=  \frac{\hat{X}}{2}\left \{(e^{j\omega_c t}+e^{-j\omega_c t})+a_i(t)(e^{j\omega_c t} + e^{-j\omega_c t}) \right \}
-        \label{eq:in_am_sig2}
-    \end{split}
-\end{equation}
-%
-$X(s)=\mathcal{L}\{x(t)\},\; a_i(s) = \mathcal{L}\{a_i(s)\}$とし、(\ref{eq:in_am_sig2})をラプラス変換すると、
-%
-\begin{equation}
-    \begin{split}
-        X(s) &= \frac{\hat{X}}{2}\left \{\frac{1}{s-j\omega_c}
-        + \frac{1}{s+j\omega_c} + a_i(s - j\omega_c)+a_i(s+j\omega_c) \right \} \\
-        &= \hat{X}\left \{\frac{s}{s^2 + \omega_c^2}
-        + a_i(s - j\omega_c)+a_i(s+j\omega_c) \right \}
-    \end{split}
+    X(s) = \frac{\hat{X}}{2} \left \{\frac{2 s}{s^2 + \omega_c^2}
+    + a_i(s - j\omega_c)+a_i(s+j\omega_c) \right \}
     \label{eq:lt_in_sig2}
 \end{equation}
 %
-変調の振幅が十分小さい場合、つまり、$a_{o, a}(t) \ll 1,\; \phi_{o, a}(t) \ll 1$の時、二次の微少量を無視すると(\ref{eq:out_am_sig1})は、
+一方、出力信号$y(t)$は$a_o \ll 1,\; \phi_o \ll 1$の場合、以下のように近次できる。
 %
-\begin{equation}
-    \begin{split}
-        y(t) &= \Re\left \{\hat{Y}(1 + a_{o,a}(t))e^{j(\omega_c t + \phi_0 + \phi_{o,a} (t))}\right \} \\
-        &\simeq \Re\left \{\hat{Y}(1 + a_{o, a}(t))\{1 + j \phi_{o, a} (t)\}e^{j(\omega_c t +  \phi_0)}\right \} \\
-        &\simeq\Re{\hat{Y}(1 + a_{o, a}(t)+ j \phi_{o, a} (t))e^{j(\omega_c t +  \phi_0)}} \\
-        &= \hat{Y}\left \{(1+ a_{o,a}(t))\cos(\omega_c t +  \phi_0)
-        - \phi_{o, a}(t)\sin(\omega_c t +  \phi_0) \right \} \\
-        &= \frac{\hat{Y}}{2}\left \{\left (1+a_{o,a}(t)\right )\left (e^{j(\omega_c t
-                + \phi_0)}+e^{-j(\omega_c t+\phi_0)}\right )
-        +j \phi_{o,a}(t)\left (e^{j(\omega_c t+\phi_0)}-e^{-j(\omega_c t + \phi_0)}\right ) \right \}
-        \label{eq:out_pm_sig2}
-    \end{split}
-\end{equation}
+\begin{align}
+    y(t) & \simeq \Re{\hat{Y}(1+a_{o,a}(t))(1 + j\phi_{o,a}(t))e^{j(\omega_c t+\phi_o)}}\notag                        \\
+         & = \Re{\hat{Y}(1 + a_{o,a}(t) + j\phi_{o,a}(t)
+    + j\underset{0}{\uwave{a_{o,a}(t)\phi_{o,a}(t)}})e^{j(\omega_c t+\phi_0)}} \notag                                 \\
+         & \simeq \Re{\hat{Y}(1+a_{o,a}(t)+j\phi_{o,a}(t))(\cos(\omega_c t + \phi_0)+j\sin(\omega_c + \phi_0))}\notag \\
+         & = \hat{Y}\{\cos(\omega_c t+\phi_o)+a_o(t)\cos(\omega_c t+\phi_o) - \phi_o(t)\sin(\omega_c t + \phi_o)\}
+    \label{eq:out_am_sig2}
+\end{align}
 %
-(\ref{eq:out_pm_sig2})をラプラス変換すると、
+ここで、
+%
+\begin{align}
+    \mathcal{L} [\cos(\omega_c t + \phi_o)]
+     & = \frac{1}{2}\mathcal{L}[(e^{j(\omega_c t+\phi_o)}+e^{-j(\omega_c t+\phi_o)})]\notag                                             \\
+     & = \frac{1}{2}\left(\int_0^\infty e^{j(\omega_c t+\phi_o)} e^{-st} dt
+    + \int_0^\infty e^{-j()\omega_c t+\phi_o)} e^{-st} dt \right)\notag                                                                 \\
+     & = \frac{e^{j\phi_o}}{2}\int_0^\infty e^{-(s-j\omega_c) t} dt + \frac{e^{-j\phi_o}}{2}\int_0^\infty e^{-(s+j\omega_c) t} dt\notag \\
+     & = \frac{e^{j\phi_o}}{2}\left[\frac{e^{-(s-j\omega_c) t}}{-(s-j\omega_c)}\right]_0^\infty
+    +\frac{e^{-j\phi_o}}{2}\left[\frac{e^{-(s+j\omega_c) t}}{-(s+j\omega_c)}\right]_0^\infty\notag                                      \\
+     & = \frac{1}{2}\left( \frac{e^{j\phi_o}}{s-j\omega_c}+\frac{e^{-j\phi_o}}{s+j\omega_c}\right)
+    = \frac{\cos\phi_o s - \omega_c\sin\phi_o}{s^2+\omega_c^2}
+\end{align}
+%
+また、$\mathcal{L}\{a_{o,a}(t)\} = \hat{a}_{o,a}(s),\; \mathcal{L}\{\phi_{o,a}(t)\} = \hat{\phi}_{o,a}(s)$とすると、
+%
+\begin{align}
+    \mathcal{L} [a_{o,a}(t)\cos(\omega_c t+\phi_o)]
+     & = \frac{1}{2}\mathcal{L}[(a_{o,a}(t) e^{j(\omega_c t+\phi_o)}+a_{o,a}(t) e^{-j(\omega_c t+\phi_o)})]\notag \\
+     & = \frac{1}{2}\left(\int_0^\infty a_{o,a}(t) e^{j(\omega_c t+\phi_o)} e^{-st} dt
+    + \int_0^\infty a_{o,a}(t) e^{-j(\omega_c t+\phi_o)} e^{-st} dt \right)\notag                                 \\
+     & = \frac{e^{j\phi_o}}{2}\int_0^\infty a_{o,a}(t) e^{-(s-j\omega_c) t} dt
+    + \frac{e^{-j\phi_o}}{2}\int_0^\infty a_{o,a}(t) e^{-(s+j\omega_c) t} dt\notag                                \\
+     & = \frac{1}{2}\left\{e^{j\phi_o}\hat{a}_{o,a}(s-j\omega_c) + e^{-j\phi_o}\hat{a}_{o,a}(s+j\omega_c)\right\}
+\end{align}
+%
+\begin{align}
+    \mathcal{L} [\phi_{o,a}(t)\sin(\omega_c t+\phi_o)]
+     & = \frac{1}{2j}\mathcal{L}[(\phi_{o,a}(t) e^{j(\omega_c t+\phi_o)} - \phi_{o,a}(t) e^{-j(\omega_c t+\phi_o)})]\notag \\
+     & = \frac{1}{2j}\left(\int_0^\infty \phi_{o,a}(t) e^{j(\omega_c t+\phi_o)} e^{-st} dt
+    - \int_0^\infty \phi_{o,a}(t) e^{-j(\omega_c t+\phi_o)} e^{-st} dt \right)\notag                                       \\
+     & = \frac{e^{j\phi_o}}{2j}\int_0^\infty \phi_{o,a}(t) e^{-(s-j\omega_c) t} dt
+    - \frac{e^{-j\phi_o}}{2j}\int_0^\infty \phi_{o,a}(t) e^{-(s+j\omega_c) t} dt\notag                                     \\
+     & = -\frac{j}{2}\left\{e^{j\phi_o}\hat{\phi}_{o,a}(s-j\omega_c) - e^{-j\phi_o} \hat{\phi}_{o,a}(s+j\omega_c)\right\}
+\end{align}
+%
+したがって、$Y(s)=\mathcal{L}\{y(t)\}$とし(\ref{eq:out_am_sig2})をラプラス変換すると、
 %
 \begin{multline}
-    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{e^{j\phi_0}}{s-j\omega_c}+\frac{e^{-j\phi_0}}{s+j\omega_c}
-    + e^{j\phi_0}a_{o, a}(s - j\omega_c) + e^{-j\phi_0}a_{o, a}(s+j\omega_c) \\
-    + j\left \{e^{j\phi_0}\phi_{o,a}(s-j\omega_c) - e^{-j\phi_0}\phi_{o,a}(s+j\omega_c) \right \} \biggl ]
+    Y(s) = \frac{\hat{Y}}{2}\biggr [ \frac{2(\cos\phi_o s - \omega_c\sin\phi_o)}{s^2+\omega_c^2}
+        + e^{j\phi_0}\hat{a}_{o, a}(s - j\omega_c) + e^{-j\phi_0}\hat{a}_{o, a}(s+j\omega_c) \\
+        + j\left \{e^{j\phi_0}\hat{\phi}_{o,a}(s-j\omega_c) - e^{-j\phi_0}\hat{\phi}_{o,a}(s+j\omega_c) \right \} \biggl ]
     \label{eq:lt_out_am_sig2}
 \end{multline}
 %
 ここで、(\ref{eq:am_tf})より(\ref{eq:lt_out_am_sig2})は
 %
 \begin{multline}
-    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{e^{j\phi_0}(s+j\omega_c) + e^{-j\phi_0}(s-j\omega_c)}{s^2 + \omega_c^2}\\
-    + e^{j\phi_0}G_{aa}(s-j\omega_c)a_i(s - j\omega_c) + e^{-j\phi_0}G_{aa}(s+j\omega_c)a_i(s+j\omega_c) \\
-    + j\left \{e^{j\phi_0}G_{ap}(s-j\omega_c)a_i(s-j\omega_c)
-    - e^{-j\phi_0}G_{ap}(s+j\omega_c)a_i(s+j\omega_c) \right \} \biggl ]\notag
+    Y(s) = \frac{\hat{Y}}{2}\biggr [ \frac{2(\cos\phi_o s - \omega_c\sin\phi_o)}{s^2+\omega_c^2}\\
+    + e^{j\phi_0}G_{aa}(s-j\omega_c)\hat{a}_i(s - j\omega_c) + e^{-j\phi_0}G_{aa}(s+j\omega_c)\hat{a}_i(s+j\omega_c) \\
+    + j\left \{e^{j\phi_0}G_{ap}(s-j\omega_c)\hat{a}_i(s-j\omega_c)
+    - e^{-j\phi_0}G_{ap}(s+j\omega_c)\hat{a}_i(s+j\omega_c) \right \} \biggl ]\notag
 \end{multline}
 %
 したがって、
 %
 \begin{multline}
-    Y(s) = \hat{Y}\biggr [\frac{\cos\phi_0 s - \omega_c\sin\phi_0}{s^2+\omega_c^2}
-        + e^{j\phi_0}\{G_{aa}(s-j\omega_c)+j G_{ap}(s-j\omega_c)\}a_i(s-j\omega_c) \\
-        + e^{-j\phi_0}\{G_{aa}(s+j\omega_c)- j G_{ap}(s+j\omega_c)\}a_i(s+j\omega_c)\biggl ]
+    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{2(\cos\phi_0 s - \omega_c\sin\phi_0)}{s^2+\omega_c^2}
+        + e^{j\phi_0}\{G_{aa}(s-j\omega_c)+j G_{ap}(s-j\omega_c)\}\hat{a}_i(s-j\omega_c) \\
+        + e^{-j\phi_0}\{G_{aa}(s+j\omega_c)- j G_{ap}(s+j\omega_c)\}\hat{a}_i(s+j\omega_c)\biggl ]
     \label{eq:lt_out_am_sig3}
 \end{multline}
 %
-ここで$Y(s) = H(s) X(s)$より、
+ここで$Y(s) = H(s) X(s)$より、(\ref{eq:lt_in_sig2})は、
 %
 \begin{equation}
-    Y(s) = \hat{X}\biggl [\frac{s}{s^2+\omega_c^2} + a_i(s - j\omega_c) + a_i(s+j\omega_c)  \biggr ] H(s)
+    Y(s) = \frac{\hat{X}H(s)}{2}\biggl [\frac{2 s}{(s^2+\omega_c^2} + \hat{a}_i(s - j\omega_c) + \hat{a}_i(s+j\omega_c)  \biggr ]
     \label{eq:lt_out_am_sig4}
 \end{equation}
 %
@@ -456,7 +383,7 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_i(s) = \mathcal{L}\{a_i(s)\}$とし、(\ref{eq:in
     \label{eq:gaa_gap1}
 \end{equation}
 %
-(\ref{eq:coef1})より
+(\ref{eq:coef1})で、$s = \pm j\omega_c$の時を考えると、
 %
 \begin{equation}
     H(\pm j\omega_c) = \frac{\hat{Y}}{\hat{X}} e^{\pm j\phi_0}
@@ -467,8 +394,8 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_i(s) = \mathcal{L}\{a_i(s)\}$とし、(\ref{eq:in
 %
 \begin{equation}
     \begin{split}
-        G_{aa}(s) + j G_{ap}(s) &= \frac{H(s+j\omega_c)}{H(j\omega_c)} \\
-        G_{aa}(s) - j G_{ap}(s) &= \frac{H(s-j\omega_c)}{H(-j\omega_c)}
+        G_{aa}(s-j\omega_c) + j G_{ap}(s-j\omega_c) &= \frac{H(s)}{H(j\omega_c)} \\
+        G_{aa}(s+j\omega_c) - j G_{ap}(s+j\omega_c) &= \frac{H(s)}{H(-j\omega_c)}
     \end{split}
     \label{eq:gaa_gap2}
 \end{equation}
@@ -499,18 +426,17 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_i(s) = \mathcal{L}\{a_i(s)\}$とし、(\ref{eq:in
 入力の位相変調に関する変調伝達関数$G_{pp}(s),\;G_{pa}(s)$は、
 %
 \begin{equation}
-    G_{pp}(s) = \frac{\phi_{o, p}(s)}{\phi_i(s)}, \quad G_{pa}(s) = \frac{a_{o, p}(s)}{\phi_i(s)}
+    G_{pp}(s) = \frac{\hat{\phi}_{o, p}(s)}{\hat{\phi}_i(s)}, \quad G_{pa}(s) = \frac{\hat{a}_{o, p}(s)}{\hat{\phi}_i(s)}
     \label{eq:pm_tf}
 \end{equation}
 %
-(\ref{eq:in_pm_sig1})は、$\phi_i(t) \ll 1$より、
+(\ref{eq:in_pm_sig1})は、$\phi_i(t) \ll 1$の時、
 %
 \begin{equation}
     \begin{split}
         x(t) &= \Re\{\hat{X} e^{j(\omega_c t + \phi_i(t))}\} \\
         &\simeq \Re\{\hat{X}(1+j\phi_i(t)) e^{j\omega_c t}\} \\
         &= \hat{X} (\cos\omega_c t - \phi_i(t)\sin\omega_c t ) \\
-        &= \frac{\hat{X}}{2}\{(e^{j\omega_c t} + e^{-j\omega_c t}) + j \phi_i(t)(e^{j\omega_c t} - e^{-j\omega_c t})\}
         \label{eq:in_pm_sig2}
     \end{split}
 \end{equation}
@@ -519,33 +445,33 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_i(s) = \mathcal{L}\{a_i(s)\}$とし、(\ref{eq:in
 %
 \begin{equation}
     X(s) = \hat{X}\left [\frac{s}{s^2+\omega_c^2}
-        + j \left \{\phi_i(s - j\omega_c) - \phi_i(s+j\omega_c)\right \} \right ]
+        + j \left \{\hat{\phi}_i(s - j\omega_c) - \hat{\phi}_i(s+j\omega_c)\right \} \right ]
     \label{eq:lt_in_pm_sig2}
 \end{equation}
 %
 (\ref{eq:lt_out_am_sig2})と同様にして(\ref{eq:out_pm_sig1})もラプラス変換すると、
 %
 \begin{multline}
-    Y(s) = \hat{Y}\biggr [\frac{\cos\phi_0 s - \omega_c\sin\phi_0}{s^2+\omega_c^2}
-    + e^{j\phi_0}a_{o, p}(s - j\omega_c) + e^{-j\phi_0}a_{o, p}(s+j\omega_c) \\
-    + j\left \{e^{j\phi_0}\phi_{o,p}(s-j\omega_c) - e^{-j\phi_0}\phi_{o,p}(s+j\omega_c) \right \} \biggl ]
+    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{2(\cos\phi_0 s - \omega_c\sin\phi_0)}{s^2+\omega_c^2}
+    + e^{j\hat{\phi}_0}a_{o, p}(s - j\omega_c) + e^{-j\phi_0}\hat{a}_{o, p}(s+j\omega_c) \\
+    + j\left \{e^{j\phi_0}\hat{\phi}_{o,p}(s-j\omega_c) - e^{-j\phi_0}\hat{\phi}_{o,p}(s+j\omega_c) \right \} \biggl ]
     \label{eq:lt_out_pm_sig2}
 \end{multline}
 %
 同様に(\ref{eq:lt_out_pm_sig2})は
 %
 \begin{multline}
-    Y(s) = \hat{Y}\biggr [\frac{\cos\phi_0 s - \omega_c\sin\phi_0}{s^2+\omega_c^2}
-        + e^{j\phi_0}\{G_{pa}(s-j\omega_c)+j G_{pp}(s-j\omega_c)\}\phi_i(s-j\omega_c) \\
-        + e^{-j\phi_0}\{G_{pa}(s+j\omega_c)- j G_{pp}(s+j\omega_c)\}\phi_i(s+j\omega_c)\biggl ]
+    Y(s) = \frac{\hat{Y}}{2}\biggr [\frac{2(\cos\phi_0 s - \omega_c\sin\phi_0)}{s^2+\omega_c^2}
+        + e^{j\phi_0}\{G_{pa}(s-j\omega_c)+j G_{pp}(s-j\omega_c)\}\hat{\phi}_i(s-j\omega_c) \\
+        + e^{-j\phi_0}\{G_{pa}(s+j\omega_c)- j G_{pp}(s+j\omega_c)\}\hat{\phi}_i(s+j\omega_c)\biggl ]
     \label{eq:lt_out_pm_sig3}
 \end{multline}
 %
 ここで$Y(s) = H(s) X(s)$より、
 %
 \begin{equation}
-    Y(s) = \hat{X} \biggl [\frac{s}{s^2+\omega_c^2}
-        + j \left \{\phi_i(s - j\omega_c) - \phi_i(s+j\omega_c)\right \}  \biggr ] H(s)
+    Y(s) = \frac{\hat{X}H(s)}{2} \biggl [\frac{2 s}{s^2+\omega_c^2}
+        + j \left \{\hat{\phi}_i(s - j\omega_c) - \hat{\phi}_i(s+j\omega_c)\right \}  \biggr ]
     \label{eq:lt_out_pm_sig4}
 \end{equation}
 %
@@ -570,12 +496,12 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_i(s) = \mathcal{L}\{a_i(s)\}$とし、(\ref{eq:in
 以上の結果から、変調伝達関数は以下の様になる。
 %
 \begin{equation}
-    \begin{split}
-        G_{aa}(s) &= G_{pp}(s)
-        = \frac{1}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} + \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\} = G_s(s)\\
-        G_{ap}(s) &= -G_{pa}(s)
-        = \frac{j}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} - \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\} = G_c(s)
-    \end{split}
+    \begin{aligned}
+        G_{aa}(s) & = G_{pp}(s)
+                  & = \frac{1}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} + \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\} & = G_s(s) \\
+        G_{ap}(s) & = -G_{pa}(s)
+                  & = \frac{j}{2}\left\{\frac{H(s+j\omega_c)}{H(j\omega_c)} - \frac{H(s-j\omega_c)}{H(-j\omega_c)}\right\} & = G_c(s)
+    \end{aligned}
 \end{equation}
 %
 \subsection{空洞共振器への適用}
@@ -593,6 +519,253 @@ $X(s)=\mathcal{L}\{x(t)\},\; a_i(s) = \mathcal{L}\{a_i(s)\}$とし、(\ref{eq:in
 \chapter{Robinson instability}
 
 \appendix
+\chapter{ラプラス変換}
+%
+\begin{align}
+    \mathcal{L} [\cos\omega_c t]
+     & = \frac{1}{2}\mathcal{L}[(e^{j\omega_c t}+e^{-j\omega_c t})]\notag                                                    \\
+     & = \frac{1}{2}\left(\int_0^\infty e^{j\omega_c t} e^{-st} dt + \int_0^\infty e^{-j\omega_c t} e^{-st} dt \right)\notag \\
+     & = \frac{1}{2}\left(\int_0^\infty e^{-(s-j\omega_c) t} dt + \int_0^\infty e^{-(s+j\omega_c) t} dt \right)\notag        \\
+     & = \frac{1}{2}\left(\left[\frac{e^{-(s-j\omega_c) t}}{-(s-j\omega_c)}\right]_0^\infty +
+    \left[\frac{e^{-(s+j\omega_c) t}}{-(s+j\omega_c)}\right]_0^\infty \right)\notag                                          \\
+     & = \frac{1}{2}\left( \frac{1}{s-j\omega_c}+\frac{1}{s+j\omega_c}\right)
+    = \frac{s}{s^2+\omega_c^2}
+    \label{eq:lt_cos}
+\end{align}
+%
+\begin{align}
+    \mathcal{L} [\cos(\omega_c t + \phi_o)]
+     & = \frac{1}{2}\mathcal{L}[(e^{j(\omega_c t+\phi_o)}+e^{-j(\omega_c t+\phi_o)})]\notag                                             \\
+     & = \frac{1}{2}\left(\int_0^\infty e^{j(\omega_c t+\phi_o)} e^{-st} dt
+    + \int_0^\infty e^{-j()\omega_c t+\phi_o)} e^{-st} dt \right)\notag                                                                 \\
+     & = \frac{e^{j\phi_o}}{2}\int_0^\infty e^{-(s-j\omega_c) t} dt + \frac{e^{-j\phi_o}}{2}\int_0^\infty e^{-(s+j\omega_c) t} dt\notag \\
+     & = \frac{e^{j\phi_o}}{2}\left[\frac{e^{-(s-j\omega_c) t}}{-(s-j\omega_c)}\right]_0^\infty
+    +\frac{e^{-j\phi_o}}{2}\left[\frac{e^{-(s+j\omega_c) t}}{-(s+j\omega_c)}\right]_0^\infty\notag                                      \\
+     & = \frac{1}{2}\left( \frac{e^{j\phi_o}}{s-j\omega_c}+\frac{e^{-j\phi_o}}{s+j\omega_c}\right)
+    = \frac{\cos\phi_o s - \omega_c\sin\phi_o}{s^2+\omega_c^2}
+    \label{eq:lt_cos_phi0}
+\end{align}
+%
+$\mathcal{L}\{a_i(t)\} = \hat{a}_i(s)$とすると、
+%
+\begin{align}
+    \mathcal{L} [a_i(t)\cos\omega_c t]
+     & = \frac{1}{2}\mathcal{L}[(a_i(t) e^{j\omega_c t}+a_i(t) e^{-j\omega_c t})]\notag                                                    \\
+     & = \frac{1}{2}\left(\int_0^\infty a_i(t) e^{j\omega_c t} e^{-st} dt + \int_0^\infty a_i(t) e^{-j\omega_c t} e^{-st} dt \right)\notag \\
+     & = \frac{1}{2}\left(\int_0^\infty a_i(t) e^{-(s-j\omega_c) t} dt + \int_0^\infty a_i(t) e^{-(s+j\omega_c) t} dt \right)\notag        \\
+     & = \frac{1}{2}\{\hat{a}_i(s-j\omega_c) + \hat{a}_i(s+j\omega_c)\}
+    \label{eq:lt_ai_cos}
+\end{align}
+%
+$\mathcal{L}\{a_{o,a}(t)\} = \hat{a}_{o,a}(s),\; \mathcal{L}\{\phi_{o,a}(t)\} = \hat{\phi}_{o,a}(s)$とすると、
+%
+\begin{align}
+    \mathcal{L} [a_{o,a}(t)\cos(\omega_c t+\phi_o)]
+     & = \frac{1}{2}\mathcal{L}[(a_{o,a}(t) e^{j(\omega_c t+\phi_o)}+a_{o,a}(t) e^{-j(\omega_c t+\phi_o)})]\notag \\
+     & = \frac{1}{2}\left(\int_0^\infty a_{o,a}(t) e^{j(\omega_c t+\phi_o)} e^{-st} dt
+    + \int_0^\infty a_{o,a}(t) e^{-j(\omega_c t+\phi_o)} e^{-st} dt \right)\notag                                 \\
+     & = \frac{e^{j\phi_o}}{2}\int_0^\infty a_{o,a}(t) e^{-(s-j\omega_c) t} dt
+    + \frac{e^{-j\phi_o}}{2}\int_0^\infty a_{o,a}(t) e^{-(s+j\omega_c) t} dt\notag                                \\
+     & = \frac{1}{2}\left\{e^{j\phi_o}\hat{a}_{o,a}(s-j\omega_c) + e^{-j\phi_o}\hat{a}_{o,a}(s+j\omega_c)\right\}
+\end{align}
+%
+\begin{align}
+    \mathcal{L} [\phi_{o,a}(t)\sin(\omega_c t+\phi_o)]
+     & = \frac{1}{2j}\mathcal{L}[(\phi_{o,a}(t) e^{j(\omega_c t+\phi_o)} - \phi_{o,a}(t) e^{-j(\omega_c t+\phi_o)})]\notag \\
+     & = \frac{1}{2j}\left(\int_0^\infty \phi_{o,a}(t) e^{j(\omega_c t+\phi_o)} e^{-st} dt
+    - \int_0^\infty \phi_{o,a}(t) e^{-j(\omega_c t+\phi_o)} e^{-st} dt \right)\notag                                       \\
+     & = \frac{e^{j\phi_o}}{2j}\int_0^\infty \phi_{o,a}(t) e^{-(s-j\omega_c) t} dt
+    - \frac{e^{-j\phi_o}}{2j}\int_0^\infty \phi_{o,a}(t) e^{-(s+j\omega_c) t} dt\notag                                     \\
+     & = -\frac{j}{2}\left\{e^{j\phi_o}\hat{\phi}_{o,a}(s-j\omega_c) - e^{-j\phi_o} \hat{\phi}_{o,a}(s+j\omega_c)\right\}
+\end{align}
+
+
+\chapter{変調}
+\section{定義とベクトル表記}
+高周波の搬送波で情報を伝送するには変調が必要である。実際、信号が時間の純粋な正弦関数から外れるたびに変調が行われる。
+
+振幅(a(t))と位相(p(t))で変調された$\omega_c$における搬送波正弦波の時間依存性は次式で表される:
+%
+\begin{equation}
+    x(t) = \Re{\hat{X}(1+a(t))e^{j(\omega_c t + \phi(t))}}
+\end{equation}
+%
+純粋な正弦波変調の場合:
+%
+\begin{equation}
+    x(t) = \Re{\hat{X}(1 + \hat{a}\cos\omega_{\mathrm{AM}}t)e^{j(\omega_c t + \hat{\phi}\sin\omega_{\mathrm{PM}}t)}}
+\end{equation}
+
+
+\clearpage
+
+\section{Pedersen Model}
+\subsection{空洞を介した位相、振幅、チューニング伝送}
+
+位相および振幅が変調された正弦波信号は次のように表せる。
+
+
+
+
+位相および振幅変調された正弦波信号を送信する場合：
+
+
+$a_i(t)$で振幅変調され、$\phi(t)$で位相変調された角振動数$\omega_c$の正弦波信号は、次のように表される。
+%
+\begin{equation}
+    x(t) = \Re{A_i(1+a_i(t))e^{j(\omega_c t+\phi_i(t))}}
+    \label{eq:in_sig1}
+\end{equation}
+%
+$a_i \ll 1,\; \phi_i \ll 1$の場合、(\ref{eq:in_sig1})は
+%
+\begin{align}
+    x(t) & \simeq \Re{A_i(1 + a_i(t))(1 + j\phi_i(t))e^{j\omega_c t}}                                \notag   \\
+         & = \Re{A_i(1 + a_i(t) + j\phi_i(t) + j\underset{0}{\uwave{a_i(t)\phi_i(t)}})e^{j\omega_c t}} \notag \\
+         & \simeq \Re{A_i(1 + a_i(t) + j\phi_i(t))e^{j\omega_c t}}\notag                                      \\
+         & = \Re{A_i(1 + a_i(t) + j\phi_i(t))(\cos\omega_c t + j\sin\omega_c t)} \notag                       \\
+         & = A_i(\cos\omega_c t + a_i(t)\cos\omega_c t - \phi(t)\sin\omega_c t)
+    \label{eq:in_sig2}
+\end{align}
+%
+ここで、
+%
+\begin{align}
+    \mathcal{L} [\cos\omega_c t]
+     & = \frac{1}{2}\mathcal{L}[(e^{j\omega_c t}+e^{-j\omega_c t})]\notag                                                    \\
+     & = \frac{1}{2}\left(\int_0^\infty e^{j\omega_c t} e^{-st} dt + \int_0^\infty e^{-j\omega_c t} e^{-st} dt \right)\notag \\
+     & = \frac{1}{2}\left(\int_0^\infty e^{-(s-j\omega_c) t} dt + \int_0^\infty e^{-(s+j\omega_c) t} dt \right)\notag        \\
+     & = \frac{1}{2}\left(\left[\frac{e^{-(s-j\omega_c) t}}{-(s-j\omega_c)}\right]_0^\infty +
+    \left[\frac{e^{-(s+j\omega_c) t}}{-(s+j\omega_c)}\right]_0^\infty \right)\notag                                          \\
+     & = \frac{1}{2}\left( \frac{1}{s-j\omega_c}+\frac{1}{s+j\omega_c}\right)
+    = \frac{s}{s^2+\omega_c^2}
+\end{align}
+%
+また、$\mathcal{L}\{a_i(t)\} = a_i(s),\; \mathcal{L}\{\phi_i(t)\} = \phi_i(s)$とすると、
+%
+\begin{align}
+    \mathcal{L} [a_i(t)\cos\omega_c t]
+     & = \frac{1}{2}\mathcal{L}[(a_i(t) e^{j\omega_c t}+a_i(t) e^{-j\omega_c t})]\notag                                                    \\
+     & = \frac{1}{2}\left(\int_0^\infty a_i(t) e^{j\omega_c t} e^{-st} dt + \int_0^\infty a_i(t) e^{-j\omega_c t} e^{-st} dt \right)\notag \\
+     & = \frac{1}{2}\left(\int_0^\infty a_i(t) e^{-(s-j\omega_c) t} dt + \int_0^\infty a_i(t) e^{-(s+j\omega_c) t} dt \right)\notag        \\
+     & = \frac{a_i(s-j\omega_c) + a_i(s+j\omega_c)}{2}
+\end{align}
+%
+\begin{align}
+    \mathcal{L} [\phi_i(t)\sin\omega_c t]
+     & = \frac{1}{2j}\mathcal{L}[(\phi_i(t) e^{j\omega_c t} - \phi_i(t) e^{-j\omega_c t})]\notag \\
+     & = \frac{1}{2j}\left(\int_0^\infty \phi_i(t) e^{j\omega_c t} e^{-st} dt -
+    \int_0^\infty \phi_i(t) e^{-j\omega_c t} e^{-st} dt \right)\notag                            \\
+     & = \frac{1}{2j}\left(\int_0^\infty \phi_i(t) e^{-(s-j\omega_c) t} dt -
+    \int_0^\infty \phi_i(t) e^{-(s+j\omega_c) t} dt \right)\notag                                \\
+     & = \frac{\phi_i(s-j\omega_c) - \phi_i(s+j\omega_c)}{2j}
+\end{align}
+%
+以上より、$X(s) = \mathcal{L}\{x(t)\}$とし、(\ref{eq:in_sig2})をラプラス変換すると、
+%
+\begin{equation}
+    X(s) = \frac{A_i}{2}\left\{ \frac{2s}{s^2+\omega_c^2}
+    + a_i(s-j\omega_c) + j\phi_i(s-j\omega_c)
+    + a_i(s+j\omega_c) - j\phi_i(s+j\omega_c) \right\}
+\end{equation}
+
+伝達関数$H(s)$を介して、出力される信号$y(t)$は一般的に振幅と位相の両方は変調され、次の様に表せる。
+%
+\begin{equation}
+    y(t) = \Re{A_o(1+a_o(t))e^{j(\omega_c t+\phi_z + \phi_o(t))}}
+    \label{eq:out_sig1}
+\end{equation}
+%
+$a_o \ll 1,\; \phi_o \ll 1$の場合、(\ref{eq:out_sig1})は
+%
+\begin{align}
+    y(t) & \simeq \Re{A_o(1+a_o(t))(1 + j\phi_o(t))e^{j(\omega_c t+\phi_z)}}\notag                                     \\
+         & = \Re{A_i(1 + a_o(t) + j\phi_o(t) + j\underset{0}{\uwave{a_o(t)\phi_o(t)}})e^{j(\omega_c t+\phi_z)}} \notag \\
+         & \simeq \Re{A_o(1+a_o(t)+j\phi_o(t))(\cos(\omega_c t + \phi_z)+j\sin(\omega_c + \phi_z))}\notag              \\
+         & = A_o(\cos(\omega_c t+\phi_z)+a_o(t)\cos(\omega_c t+\phi_z) - \phi_o(t)\sin(\omega_c t + \phi_z))
+    \label{eq:out_sig2}
+\end{align}
+%
+ここで、
+%
+\begin{align}
+    \mathcal{L} [\cos(\omega_c t + \phi_z)]
+     & = \frac{1}{2}\mathcal{L}[(e^{j(\omega_c t+\phi_z)}+e^{-j(\omega_c t+\phi_z)})]\notag                                             \\
+     & = \frac{1}{2}\left(\int_0^\infty e^{j(\omega_c t+\phi_z)} e^{-st} dt
+    + \int_0^\infty e^{-j()\omega_c t+\phi_z)} e^{-st} dt \right)\notag                                                                 \\
+     & = \frac{e^{j\phi_z}}{2}\int_0^\infty e^{-(s-j\omega_c) t} dt + \frac{e^{-j\phi_z}}{2}\int_0^\infty e^{-(s+j\omega_c) t} dt\notag \\
+     & = \frac{e^{j\phi_z}}{2}\left[\frac{e^{-(s-j\omega_c) t}}{-(s-j\omega_c)}\right]_0^\infty
+    +\frac{e^{-j\phi_z}}{2}\left[\frac{e^{-(s+j\omega_c) t}}{-(s+j\omega_c)}\right]_0^\infty\notag                                      \\
+     & = \frac{1}{2}\left( \frac{e^{j\phi_z}}{s-j\omega_c}+\frac{e^{-j\phi_z}}{s+j\omega_c}\right)
+    = \frac{\cos\phi_z s - \omega_c\sin\phi_z}{s^2+\omega_c^2}
+\end{align}
+%
+また、$\mathcal{L}\{a_o(t)\} = a_o(s),\; \mathcal{L}\{\phi_o(t)\} = \phi_o(s)$とすると、
+%
+\begin{align}
+    \mathcal{L} [a_o(t)\cos(\omega_c t+\phi_z)]
+     & = \frac{1}{2}\mathcal{L}[(a_o(t) e^{j(\omega_c t+\phi_z)}+a_o(t) e^{-j(\omega_c t+\phi_z)})]\notag \\
+     & = \frac{1}{2}\left(\int_0^\infty a_o(t) e^{j(\omega_c t+\phi_z)} e^{-st} dt
+    + \int_0^\infty a_o(t) e^{-j(\omega_c t+\phi_z)} e^{-st} dt \right)\notag                             \\
+     & = \frac{e^{j\phi_z}}{2}\int_0^\infty a_o(t) e^{-(s-j\omega_c) t} dt
+    + \frac{e^{-j\phi_z}}{2}\int_0^\infty a_o(t) e^{-(s+j\omega_c) t} dt\notag                            \\
+     & = \frac{e^{j\phi_z}}{2}a_o(s-j\omega_c) + \frac{e^{-j\phi_z}}{2} a_o(s+j\omega_c)
+\end{align}
+%
+\begin{align}
+    \mathcal{L} [\phi_o(t)\sin(\omega_c t+\phi_z)]
+     & = \frac{1}{2j}\mathcal{L}[(\phi_o(t) e^{j(\omega_c t+\phi_z)} - \phi_o(t) e^{-j(\omega_c t+\phi_z)})]\notag \\
+     & = \frac{1}{2j}\left(\int_0^\infty \phi_o(t) e^{j(\omega_c t+\phi_z)} e^{-st} dt
+    - \int_0^\infty \phi_o(t) e^{-j(\omega_c t+\phi_z)} e^{-st} dt \right)\notag                                   \\
+     & = \frac{e^{j\phi_z}}{2j}\int_0^\infty \phi_o(t) e^{-(s-j\omega_c) t} dt
+    - \frac{e^{-j\phi_z}}{2j}\int_0^\infty \phi_o(t) e^{-(s+j\omega_c) t} dt\notag                                 \\
+     & = \frac{e^{j\phi_z}}{2j}\phi_o(s-j\omega_c) - \frac{e^{-j\phi_z}}{2j} \phi_o(s+j\omega_c)
+\end{align}
+%
+以上より、$Y(s) = \mathcal{L}\{y(t)\}$とし、(\ref{eq:out_sig2})をラプラス変換すると、
+%
+\begin{multline}
+    Y(s) = A_o\biggr [\frac{\cos\phi_z s - \omega_c\sin\phi_z}{s^2+\omega_c^2}
+        +  \frac{e^{j\phi_z}}{2}\{a_o(s-j\omega_c) + j \phi_o(s-j\omega_c)\}\\
+        + \frac{e^{-j\phi_z}}{2}\{a_o(s+j\omega_c) + j \phi_o(s+j\omega_c)\}\biggl ]
+    \label{eq:lt_out_sig2}
+\end{multline}
+%
+ここで、
+%
+\begin{equation}
+    \left\{
+    \begin{aligned}
+        a_o(s)    & = G_{aa}(s) a_i(s) + G_{pa}(s)\phi_i(s) \\
+        \phi_o(s) & = G_{ap}(s) a_i(s) + G_{pp}(s)\phi_i(s)
+        \label{eq:tf}
+    \end{aligned}
+    \right.
+\end{equation}
+%
+より、(\ref{eq:tf})を(\ref{eq:lt_out_sig2})に代入すると、
+%
+\begin{multline}
+    Y(s) = \frac{A_o}{2}\biggr [\frac{2(\cos\phi_z s - \omega_c\sin\phi_z)}{s^2+\omega_c^2}\\
+        + e^{j\phi_z}\{(G_{aa}(s-j\omega_c) +j G_{ap}(s-j\omega_c)) a_i(s-j\omega_c)\\
+        + (G_{pa}(s-j\omega_c) +j G_{pp}(s-j\omega_c))\} \phi_i(s-j\omega_c)\\
+        + e^{-j\phi_z}\{(G_{aa}(s+j\omega_c) -j G_{ap}(s+j\omega_c)) a_i(s+j\omega_c)\\
+        + (G_{pa}(s+j\omega_c) -j G_{pp}(s+j\omega_c))\} \phi_i(s-+j\omega_c) \biggl ]
+    \label{eq:lt_out_sig3}
+\end{multline}
+%
+ここで$Y(s) = H(s) X(s)$より、
+%
+\begin{equation}
+    Y(s) = \frac{A_i H(s)}{2}\left\{ \frac{2s}{s^2+\omega_c^2}
+    + a_i(s-j\omega_c) + j\phi_i(s-j\omega_c)
+    + a_i(s+j\omega_c) - j\phi_i(s+j\omega_c) \right\}
+    \label{eq:lt_out_sig4}
+\end{equation}
+%
+(\ref{eq:lt_out_sig3})と(\ref{eq:lt_out_sig4})で係数を比較すると、
+
+
 \chapter{加速空洞の等価回路}
 \section{RLC並列共振回路の微分方程式}
 %
