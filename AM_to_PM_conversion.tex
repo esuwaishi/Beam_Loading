@@ -1,0 +1,55 @@
+\documentclass[article]{jlreq}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm}
+%\usepackage{mathtools}
+%\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{bm}
+
+\usepackage{ulem}
+
+% \usepackage[pdfencoding=auto]{hyperref}
+% \usepackage{xcolor}
+% \hypersetup{
+%   bookmarksnumbered=true,
+%   colorlinks=true,
+%   citecolor=red,
+%   linkcolor=blue,
+%   urlcolor=orange,
+% }
+
+\renewcommand{\today}{\the\year/\the\month/\the\day}
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\abstractname}{Abstract}
+\renewcommand{\refname}{References}
+\renewcommand{\figurename}{Fig.~}
+\renewcommand{\tablename}{Table~}
+
+%\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+\begin{document}
+\title{AM to PM conversion of linear filters}
+\author{Magnus Danielson}
+\maketitle
+%\tableofcontents
+%%\clearpage
+
+\begin{abstract}
+    変調信号がフィルターを通過する際の振幅変調と位相変調の間の変換が分析されます。変調された側波帯の振幅がフィルタをどのように通過するか、および AM と PM が側波帯の 1つで反対の符号をどのように相互作用するかの違い。AM と PM の間の変換がモデル化され、散乱モデルと線形フィルター伝達関数に基づく2つの関数の評価が提供されます。システム帯域幅の影響が分析され、AM と PM の分離を確実にするための経験則が開発されます。
+\end{abstract}
+
+\section{INTRODUCTION}
+%
+
+%
+\begin{thebibliography}{9}
+    \bibitem{ref:1}
+    Eva S. Ferre-Pikal, Fred L. Walls and Craig W. Nelson, Guidelines for Designing BJT Amplifiers with Low 1/f AM and PM noise, April 1997 IEEE Transactions on Ultrasonics Ferroelectrics and Frequency Control 44(2):335 - 343, DOI10.1109/58.585118
+    B.P. Lathi, Signals, systems and communication, Publ. John Wiley \& Sons, 1965.
+    \bibitem{ref:2}
+    L. Rde and B. Westergren, Mathematics Handbook for Science and Engineering, 5th ed., Lund, Sweden: Studentliteratur, 2010.
+\end{thebibliography}
+%
+%
+\end{document}
