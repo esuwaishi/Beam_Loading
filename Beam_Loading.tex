@@ -32,9 +32,9 @@
 \author{Shin-ichi YOSHIMOTO}
 \maketitle
 \tableofcontents
-%%\clearpage
 
-\part{Beam Loading}
+%%\part{Beam Loading}
+
 \chapter{Static Beam Loading}
 \section{Cavityの基礎}
 \subsection{Power dissipation}
@@ -193,7 +193,20 @@ $\partial P_{diss}/\partial Y_c = 0$より、$Y_g = Y_c$の時、$P_{diss}$は�
     V(t) = \tilde{V}e^{j\omega_c t}, \; I(t) = \tilde{I}e^{j\omega_c t}
 \end{equation}
 
-\clearpage
+\section{Cavity voltage}
+
+\begin{equation}
+    \left(\dv[2]{t}+\frac{\omega_c}{Q_L}\dv{t}+\omega_c^2\right)V_c(t)=\frac{\omega_c R_L}{Q_L}\dv{I_{tot}}{t}
+\end{equation}
+
+\section{Steady-state conditions}
+
+\section{Analysis of small perturbations}
+
+\begin{align}
+    \delta V_c(t) = \frac{1}{2}\left\{V_c e^{-j\omega_g t}U(t)+ c.c\right\}
+\end{align}
+
 
 \section{Equations for cavity voltage}
 \begin{equation}
@@ -212,8 +225,8 @@ $\partial P_{diss}/\partial Y_c = 0$より、$Y_g = Y_c$の時、$P_{diss}$は�
 %
 \clearpage
 
-\section{Pedersen Model}
-\subsection{Modulation Transfer Function}
+\chapter{Amplitude and phase modulation}
+\section{Modulation Transfer Function}
 %
 振幅変調(AM)や位相変調(PM)された正弦波信号を伝達関数$H(s)$を持つシステムを介した場合、出力信号も一般に振幅変調と位相変調の両方を受けることになる。このようなシステムの完全な特性評価には、システムの伝達関数$H(s)$から導き出すことができる次の4つの異なる変調伝達関数(Modulation Transfer Function)を求める必要がある。(Fig.\ref{fig:MTF})
 %
@@ -516,9 +529,56 @@ $X(s)=\mathcal{L}\{x(t)\}$とし、(\ref{eq:in_am_sig1})をラプラス変換す
 \end{align}
 %
 
+
+
 \chapter{Robinson instability}
 
 \appendix
+\chapter{周波数伝達関数}
+\section{部分分数展開を用いたラプラス逆変換の計算}
+一般に、有理関数で表された伝達関数$G(s)$は、
+%
+\begin{equation}
+    G(s)=K\frac{(s+z_1)(s+z_2)\dots(s+z_m)}{(s+p_1)(s+p_2)\dots(s+p_n)}
+\end{equation}
+%
+
+入力を、$u(t)=e^{j\omega t}$とすると、ラプラス変換は、次式で与えられる。
+%
+\begin{equation}
+    U(s)= \mathcal{L}[u(t)]=\mathcal{L}[e^{j\omega t}]=\frac{1}{s-j\omega}
+\end{equation}
+%
+したがって、出力$Y(s)=\mathcal{L}[y(t)]$は、次のように部分分数展開できる。
+%
+\begin{equation}
+    \begin{split}
+        Y(s) &= G(s)U(s) = \frac{k(s-z_1)(s-z_2)\dots(s-z_m)}{(s-p_1)(s-p_2)\dots(s-p_n)}\frac{1}{s-j\omega} \\
+        &= \frac{k_1}{s-p_1}+\frac{k_2}{s-p_2}+\dots+\frac{k_n}{s-p_n}+\frac{a}{s-j\omega}\notag
+    \end{split}
+\end{equation}
+%
+ただし、
+%
+\begin{equation}
+    \begin{split}
+        k_i &= \lim_{s \to p_i}(s-p_i)G(s)\frac{s}{s-j\omega} \\
+        a &=\lim_{s \to j\omega}(s-j\omega)G(s)\frac{1}{s-j\omega} =\lim_{s \to j\omega}G(s)\cdot 1=G(j\omega)
+    \end{split}
+\end{equation}
+%
+したがって、出力は$Y(s)$を逆ラプラス変換して次式で求められる。
+%
+\begin{equation}
+    y(t)=k_1 e^{p_1 t}+k_2 e^{p_2 t}+ \dots + k_n e^{p_n t} + a e^{j\omega t}
+\end{equation}
+%
+極の実部は負であるから、定常状態では次式で与えられる。
+%
+\begin{equation}
+    y(t) = a e^{j\omega t} = G(j\omega) e^{j\omega t}
+\end{equation}
+%
 \chapter{ラプラス変換}
 %
 \begin{align}
@@ -580,24 +640,7 @@ $\mathcal{L}\{a_{o,a}(t)\} = \hat{a}_{o,a}(s),\; \mathcal{L}\{\phi_{o,a}(t)\} = 
 \end{align}
 
 
-\chapter{変調}
-\section{定義とベクトル表記}
-高周波の搬送波で情報を伝送するには変調が必要である。実際、信号が時間の純粋な正弦関数から外れるたびに変調が行われる。
 
-振幅(a(t))と位相(p(t))で変調された$\omega_c$における搬送波正弦波の時間依存性は次式で表される:
-%
-\begin{equation}
-    x(t) = \Re{\hat{X}(1+a(t))e^{j(\omega_c t + \phi(t))}}
-\end{equation}
-%
-純粋な正弦波変調の場合:
-%
-\begin{equation}
-    x(t) = \Re{\hat{X}(1 + \hat{a}\cos\omega_{\mathrm{AM}}t)e^{j(\omega_c t + \hat{\phi}\sin\omega_{\mathrm{PM}}t)}}
-\end{equation}
-
-
-\clearpage
 
 \section{Pedersen Model}
 \subsection{空洞を介した位相、振幅、チューニング伝送}

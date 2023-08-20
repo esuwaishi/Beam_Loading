@@ -6,9 +6,9 @@
 %\usepackage{siunitx}
 \usepackage{physics}
 \usepackage{bm}
-
+%
 \usepackage{ulem}
-
+%
 \usepackage[pdfencoding=auto]{hyperref}
 \usepackage{xcolor}
 \hypersetup{
@@ -18,13 +18,13 @@
   linkcolor=blue,
   urlcolor=orange,
 }
-
+%
 \renewcommand{\today}{\the\year/\the\month/\the\day}
 \renewcommand{\contentsname}{Contents}
 \renewcommand{\refname}{References}
 \renewcommand{\figurename}{Fig.~}
 \renewcommand{\tablename}{Table~}
-
+%
 %\AtBeginDocument{\RenewCommandCopy\qty\SI}
 
 \begin{document}
@@ -32,190 +32,81 @@
 \author{Shin-ichi YOSHIMOTO}
 \maketitle
 \tableofcontents
-%%\clearpage
 
-%%\part{数学的準備}
-\chapter{フーリエ変換}
-\chapter{ラプラス変換}
-\chapter{振幅変調}
-\chapter{角度変調}
+\chapter{変調}
+\section{定義とベクトル表記}
+高周波の搬送波で情報を伝送するには変調が必要である。実際、信号が時間の純粋な正弦関数から外れるたびに変調が行われる。
 
-
-\section{Cavityの基礎}
-\subsection{Power dissipation}
-\begin{equation}
-    P_{diss} = \frac{1}{2} \cdot \frac{V_{cav}^2}{R} = \frac{V_{cav}^2}{R_{sh}}
-\end{equation}
-
-\subsection{Shut impedance}
-\begin{equation}
-    R = \frac{1}{2}\cdot R_{sh}
-\end{equation}
-
-空洞の入力カップラーの変圧比を$1:n$とすると(Fig. \ref{fig:Ideal_Trans})、
-%
-\begin{figure}[hbt]
-    \begin{center}
-        \includegraphics[width=12cm,clip]{figs/Ideal_Transformer.pdf}
-        \caption{理想的なトランスによる入力カップラー.}
-        \label{fig:Ideal_Trans}
-    \end{center}
-\end{figure}
+振幅 ($a(t)$) と位相 ($p(t)$) で変調された$\omega_c$における搬送波正弦波の時間依存性は次式で表される:
 %
 \begin{equation}
-    V_2 = N\cdot V_1, \; I_2 = \frac{1}{N}\cdot I_1
+    x(t) = \Re{\hat{X}(1+a(t))e^{j(\omega_c t + \phi(t))}}
 \end{equation}
 %
-したがって、
+純粋な正弦波変調の場合:
+%
+\begin{align}
+    a(t)    & = \hat{a}\cos\omega_{AM}t    \\
+    \phi(t) & = \hat{\phi}\sin\omega_{PM}t
+\end{align}
+%
 \begin{equation}
-    Z_2 = n^2 \cdot Z_1
+    x(t) = \Re{\hat{X}(1 + \hat{a}\cos\omega_{\mathrm{AM}}t)e^{j(\omega_c t + \hat{\phi}\sin\omega_{\mathrm{PM}}t)}}
+\end{equation}
+%
+変調の振幅が小さい場合、便利な近似式は:
+%
+\begin{equation}
+    x(t) \approx \Re{\hat{X}(1+\hat{a}\cos\omega_{AM} t)(1+j\hat{\phi}\sin\omega_{PM} t)e^{j\omega_c t}}
+\end{equation}
+%
+この式は次のように再構成できる:
+%
+\begin{equation}
+    x(t) \approx \Re{\hat{X}\left[e^{j\omega_c}t
+    +\frac{\hat{a}}{2}\left(e^{j(\omega_c+\omega_{AM})t}+e^{j(\omega_c-\omega_{AM})t}\right)
+    +\frac{\hat{\phi}}{2}\left(e^{j(\omega_c+\omega_{PM})t}-e^{j(\omega_c-\omega_{PM})t}\right)\right]}
+    \label{eq:am_pm_sig}
 \end{equation}
 
-\subsection{Available Power}
-%
-\begin{figure}[hbt]
-    \begin{center}
-        \includegraphics[width=12cm,clip]{figs/Available_Power.pdf}
-        \caption{理想的なトランスによる入力カップラー.}
-        \label{fig:Available_Power}
-    \end{center}
-\end{figure}
-%
-\begin{equation}
-    P_{diss} = \frac{1}{2}Y_c V_g^2
-\end{equation}
-%
-\begin{equation}
-    V_g = \frac{I_g}{Y_L}=\frac{I_g}{Y_g+Y_c}
-\end{equation}
-%
-\begin{equation}
-    P_{diss} = \frac{1}{2}\frac{Y_c}{(Y_g+Y_c)^2}I_g^2
-\end{equation}
-%
-\begin{equation}
-    \begin{split}
-        \frac{\partial P_{diss}}{\partial Y_c} &= \frac{1}{2}\frac{(Y_g + Y_c)^2 - 2Y_c(Y_g+Y_c)}{(Y_g+Y_c)^4} I_g^2 \\
-        &= \frac{1}{2}\frac{Y_g-Y_c}{(Y_g+Y_c)^3} I_g^2
-    \end{split}
-\end{equation}
-%
-$\partial P_{diss}/\partial Y_c = 0$より、$Y_g = Y_c$の時、$P_{diss}$は最大になり
-%
-\begin{equation}
-    P_{diss}^{max} = \frac{1}{8} Y_g I_g^2 = \frac{1}{8}\frac{R}{\beta}I_g^2 \equiv P_g
-\end{equation}
+\section{線形システムを介した伝送}
 
-
-
-\section{ビーム負荷付き空洞のRCL等価回路}
-
-\begin{figure}[hbt]
-    \begin{center}
-        \includegraphics[width=12cm,clip]{figs/Cavity_Model.pdf}
-        \caption{理想的なトランスによる入力カップラー.}
-        \label{Cavity_Model}
-    \end{center}
-\end{figure}
-
-\subsection{Cavity parameters}
-
-\begin{figure}[hbt]
-    \begin{center}
-        \includegraphics[width=12cm,clip]{figs/Equivalent_Circuit}
-        \caption{等価回路}
-        \label{Equivalent_Circuit}
-    \end{center}
-\end{figure}
+入力信号$x(t)$の変調振幅が小さい場合、式(\ref{eq:am_pm_sig})を用いることができ、システムは線形なので、出力信号$y(t)$は、それぞれの異なる周波数の重ね合わせとして書くことができる。
 %
-\paragraph{共振周波数}
+\begin{multline}
+    y(t) = \hat{X}\Re\biggr\{\biggr [H(j\omega_c)e^{j\omega_c}t \\
+        + \frac{\hat{a}}{2}\left[H(j(\omega_c+\omega_{AM}))e^{j(\omega_c+\omega_{AM})t}
+            + H(j(\omega_c-\omega_{AM}))e^{j(\omega_c-\omega_{AM})t}\right] \\
+        + \frac{\hat{\phi}}{2}\left[H(j(\omega_c+\omega_{PM}))e^{j(\omega_c+\omega_{PM})t}
+            - H(j(\omega_c-\omega_{PM}))e^{j(\omega_c-\omega_{PM})t}\right] \biggl ]\biggl\}
+\end{multline}
 %
-\begin{equation}
-    \omega_0 = \frac{1}{L C}
-\end{equation}
+これは次のように書ける、
 %
-\paragraph{Quality factor}
-%
-\begin{equation}
-    Q = 2\pi \frac{\mathrm{stored\;energy\;in\;cavity}}{\mathrm{dissipated \; energy\;per\;cycle}} = \frac{\omega_0 W}{P_{diss}}
-\end{equation}
-%
-\paragraph{Unloaded quality factor}
-%
-\begin{equation}
-    Q_0 = \omega_0 \frac{(1/2) C V^2}{V^2/(2R)} = \omega_0 R C
-\end{equation}
-%
-\paragraph{External quality factor}
-%
-\begin{equation}
-    Q_{ext} = 2\pi \frac{\mathrm{stored\;energy\;in\;cavity}}{\mathrm{dissipated \; energy\;in\;external\;devices\;per\;cycle}}
-    = \frac{\omega_0 W}{P_{ext}}
-\end{equation}
-%
-\paragraph{Loaded quality factor}
-%
-\begin{equation}
-    Q_L = 2\pi \frac{\mathrm{stored\;energy\;in\;cavity}}{\mathrm{total \; energy\;per\;cycle}} = \frac{\omega_0 W}{P_{tot}}
-\end{equation}
+\begin{multline}
+    y(t) = \hat{X}\Re\biggr\{H(j\omega_c)e^{j\omega_c}t\biggr[ 1\\
+    + \frac{\hat{a}}{2}\left[\frac{H(j(\omega_c+\omega_{AM}))}{H(j\omega_c)}e^{j\omega_{AM}t}
+    + \frac{H(j(\omega_c-\omega_{AM}))}{H(j\omega_c)}e^{-j\omega_{AM}t}\right] \\
+    + \frac{\hat{\phi}}{2}\left[\frac{H(j(\omega_c+\omega_{PM}))}{H(j\omega_c)}e^{j\omega_{PM}t}
+    - \frac{H(j(\omega_c-\omega_{PM}))}{H(j\omega_c)}e^{-j\omega_{PM}t}\right] \biggl ]\biggl\}
+\end{multline}
 %
 ここで、
 %
-\begin{equation}
-    P_{tot} = P_{diss} + P_{ext}
-\end{equation}
+\begin{align}
+    G_s(j\omega) & =
+    \frac{1}{2}\left[\frac{H(j(\omega+\omega_c))}{H(j\omega_c)}+\frac{H(j(\omega-\omega_c))}{H(-j\omega_c)} \right] \\
+    G_c(j\omega) & =
+    \frac{j}{2}\left[\frac{H(j(\omega+\omega_c))}{H(j\omega_c)}-\frac{H(j(\omega-\omega_c))}{H(-j\omega_c)} \right]
+\end{align}
 %
-したがって、
+と定義すると、
 %
-\begin{equation}
-    \frac{1}{Q_L} = \frac{1}{Q_0} + \frac{1}{Q_{ext}}
-\end{equation}
-%
-\begin{equation}
-    \frac{1}{R_L} = \frac{1}{R} + \frac{1}{Z_{ext}}
-\end{equation}
-%
-\paragraph{Coupling factor \beta}
-%
-\begin{equation}
-    \beta = \frac{P_{ext}}{P_{cav}} = \frac{Q_0}{Q_{ext}} = \frac{R}{Z_{ext}} = \frac{R}{n^2 Z_0}
-\end{equation}
-%
-\begin{figure}[hbt]
-    \begin{center}
-        \includegraphics[width=12cm,clip]{figs/Equivalent_Circuit2}
-        \caption{等価回路2}
-        \label{Equivalent_Circuit2}
-    \end{center}
-\end{figure}
-%
-\begin{equation}
-    \ddot{V}(t) + \frac{1}{R_L C}\dot{V}(t) + \frac{1}{L C} V(t) = \frac{1}{C} \dot{I}(t)
-\end{equation}
-%
-\paragraph{Phasor}
-\begin{equation}
-    V(t) = \tilde{V}e^{j\omega_c t}, \; I(t) = \tilde{I}e^{j\omega_c t}
-\end{equation}
+\begin{align}
+    G_s(j\omega)+j G_c(j\omega) & = \frac{H(j(\omega-\omega_c))}{H(-j\omega)} \\
+    G_s(j\omega)-j G_c(j\omega) & = \frac{H(j(\omega+\omega_c))}{H(j\omega)}
+\end{align}
 
-\clearpage
-
-\section{Equations for cavity voltage}
-\begin{equation}
-    \begin{split}
-        \vb*{V}_c(t) &= \tilde{V}(t)e^{j\omega_c t},\qquad \tilde{V}(t) = \hat{V}(1+a_v(t))e^{j(\phi_v(t)+\psi_v)} \\
-        \vb*{I}_b(t) &= \tilde{I}_b(t) e^{j\omega_c t},\qquad \tilde{I}_b(t) = \hat{I}_b(1+a_b(t))e^{j(\phi_b(t)+\psi_b)} \\
-        \vb*{I}_g(t) &= \tilde{I}_g(t) e^{j\omega_c t},\qquad \tilde{I}_g(t) = \hat{I}_g(1+a_g(t))e^{j(\phi_g(t)+\psi_g)} \\
-        \vb*{I}_t(t) &= \vb*{I}_g(t) + \vb*{I}_b(t) = \tilde{I}_t(t) e^{j\omega_c t}
-    \end{split}
-\end{equation}
-%
-%
-\begin{equation}
-    \ddot{\vb*{V}_c}(t) + 2 \sigma \dot{\vb*{V}_c}(t) + \omega_0^2 \vb*{V}_c(t) = 2\sigma R \dot{\vb*{I}}_t(t)
-\end{equation}
-%
-\clearpage
 
 \section{Pedersen Model}
 \subsection{Modulation Transfer Function}
@@ -521,9 +412,94 @@ $X(s)=\mathcal{L}\{x(t)\}$とし、(\ref{eq:in_am_sig1})をラプラス変換す
 \end{align}
 %
 
-\chapter{Robinson instability}
-
 \appendix
+\chapter{信号解析}
+\section{アナログ信号とシステム}
+%
+\begin{figure}[hbt]
+    \begin{center}
+        \includegraphics[width=8cm,clip]{figs/System_Func.pdf}
+        \caption{System Function.}
+        \label{fig:sys_func}
+    \end{center}
+\end{figure}
+%
+Convolution
+%
+\begin{align}
+    y(t) & =x(t)\ast h(t)                                \\
+         & =\int_{-\infty}^{\infty}x(\tau)h(t-\tau)d\tau \\
+         & =\int_{-\infty}^{\infty}x(t-\tau)h(\tau)d\tau
+\end{align}
+%
+入力信号を$x(t)=e^{j\omega t}$とすると
+%
+\begin{align}
+    y(t) & = \int_{-\infty}^{\infty}e^{j\omega(t-\tau)}h(\tau)d\tau           \\
+         & = e^{j\omega t}\int_{-\infty}^{\infty}e^{-j\omega\tau}h(\tau)d\tau
+\end{align}
+%
+ここで、$h(t)$のフーリエ変換を$H(j\omega)$とすると、
+%
+\begin{equation}
+    \mathcal{F}[h(t)] = H(j\omega) = \int_{-\infty}^{\infty}h(t)e^{-j\omega t}dt
+\end{equation}
+%
+したがって、
+%
+\begin{equation}
+    y(t) = H(j\omega)e^{j\omega t}
+\end{equation}
+%
+係数 H(w) をシステム関数と呼びます。 (1-37) または (1-38) から決定できます。 (1-38) から H(w) を決定するには、入力 f(t)= ejor を適用します。関数 H(w は、結果の応答 H(w)ewr の係数と等しくなります。
+
+\section{周波数伝達関数}
+\subsection{部分分数展開を用いたラプラス逆変換の計算}
+一般に、有理関数で表された伝達関数$G(s)$は、
+%
+\begin{equation}
+    G(s)=K\frac{(s+z_1)(s+z_2)\dots(s+z_m)}{(s+p_1)(s+p_2)\dots(s+p_n)}
+\end{equation}
+%
+
+入力を、$u(t)=e^{j\omega t}$とすると、ラプラス変換は、次式で与えられる。
+%
+\begin{equation}
+    U(s)= \mathcal{L}[u(t)]=\mathcal{L}[e^{j\omega t}]=\frac{1}{s-j\omega}
+\end{equation}
+%
+したがって、出力$Y(s)=\mathcal{L}[y(t)]$は、次のように部分分数展開できる。
+%
+\begin{equation}
+    \begin{split}
+        Y(s) &= G(s)U(s) = \frac{k(s-z_1)(s-z_2)\dots(s-z_m)}{(s-p_1)(s-p_2)\dots(s-p_n)}\frac{1}{s-j\omega} \\
+        &= \frac{k_1}{s-p_1}+\frac{k_2}{s-p_2}+\dots+\frac{k_n}{s-p_n}+\frac{a}{s-j\omega}\notag
+    \end{split}
+\end{equation}
+%
+ただし、
+%
+\begin{equation}
+    \begin{split}
+        k_i &= \lim_{s \to p_i}(s-p_i)G(s)\frac{s}{s-j\omega} \\
+        a &=\lim_{s \to j\omega}(s-j\omega)G(s)\frac{1}{s-j\omega} =\lim_{s \to j\omega}G(s)\cdot 1=G(j\omega)
+    \end{split}
+\end{equation}
+%
+したがって、出力は$Y(s)$を逆ラプラス変換して次式で求められる。
+%
+\begin{equation}
+    y(t)=k_1 e^{p_1 t}+k_2 e^{p_2 t}+ \dots + k_n e^{p_n t} + a e^{j\omega t}
+\end{equation}
+%
+極の実部は負であるから、定常状態では次式で与えられる。
+%
+\begin{equation}
+    y(t) = a e^{j\omega t} = G(j\omega) e^{j\omega t}
+\end{equation}
+%
+
+
 \chapter{ラプラス変換}
 %
 \begin{align}
@@ -583,26 +559,6 @@ $\mathcal{L}\{a_{o,a}(t)\} = \hat{a}_{o,a}(s),\; \mathcal{L}\{\phi_{o,a}(t)\} = 
     - \frac{e^{-j\phi_o}}{2j}\int_0^\infty \phi_{o,a}(t) e^{-(s+j\omega_c) t} dt\notag                                     \\
      & = -\frac{j}{2}\left\{e^{j\phi_o}\hat{\phi}_{o,a}(s-j\omega_c) - e^{-j\phi_o} \hat{\phi}_{o,a}(s+j\omega_c)\right\}
 \end{align}
-
-
-\chapter{変調}
-\section{定義とベクトル表記}
-高周波の搬送波で情報を伝送するには変調が必要である。実際、信号が時間の純粋な正弦関数から外れるたびに変調が行われる。
-
-振幅(a(t))と位相(p(t))で変調された$\omega_c$における搬送波正弦波の時間依存性は次式で表される:
-%
-\begin{equation}
-    x(t) = \Re{\hat{X}(1+a(t))e^{j(\omega_c t + \phi(t))}}
-\end{equation}
-%
-純粋な正弦波変調の場合:
-%
-\begin{equation}
-    x(t) = \Re{\hat{X}(1 + \hat{a}\cos\omega_{\mathrm{AM}}t)e^{j(\omega_c t + \hat{\phi}\sin\omega_{\mathrm{PM}}t)}}
-\end{equation}
-
-
-\clearpage
 
 \section{Pedersen Model}
 \subsection{空洞を介した位相、振幅、チューニング伝送}
@@ -769,53 +725,14 @@ $a_o \ll 1,\; \phi_o \ll 1$の場合、(\ref{eq:out_sig1})は
 \end{equation}
 %
 (\ref{eq:lt_out_sig3})と(\ref{eq:lt_out_sig4})で係数を比較すると、
-
-
-\chapter{加速空洞の等価回路}
-\section{RLC並列共振回路の微分方程式}
-%
-\begin{figure}[hbt]
-    \begin{center}
-        \includegraphics[width=12cm,clip]{figs/RLC_Model.pdf}
-        \caption{Cavity RLC Model}
-        \label{fig:RLC}
-    \end{center}
-\end{figure}
-%
-\begin{equation}
-    \begin{split}
-        I(t) &= I_R(t) + I_L(t) + I_C(t) \\
-        I_R(t) &= \frac{V(t)}{R}, \; I_L(t) = \frac{1}{L}\int V(t) dt, \; I_c(t) = C\frac{dV(t)}{dt}
-    \end{split}
-\end{equation}
-%
-したがって、
-%
-\begin{equation}
-    \frac{V(t)}{R} + \frac{1}{L}\int V(t) dt + C\frac{dV(t)}{dt} = I(t)
-\end{equation}
-%
-両辺を時間$t$で微分すると、
-%
-\begin{equation}
-    \frac{\dot{V}(t)}{R} + \frac{V(t)}{L}+ C \ddot{V(t)} = \dot{I(t)}
-\end{equation}
-%
-\begin{equation}
-    \ddot{V}(t) + \frac{1}{CR}\dot{V}(t) + \frac{1}{LC} V(t) = \frac{1}{C}\dot{I}(t)
-\end{equation}
-%
-\begin{equation}
-    \omega_0^2 = \frac{1}{LC}, \qquad \sigma = \frac{R}{2}\sqrt{\frac{C}{L}} = \frac{\omega_0}{2Q_L}
-\end{equation}
-%
-\begin{equation}
-    \ddot{V}(t) + 2 \sigma \dot{V}(t) + \omega_0^2 V(t) = 2\sigma R \dot{I}(t)
-\end{equation}
 %
 \begin{thebibliography}{9}
     \bibitem{Lathi}
     B.P. Lathi, Signals, systems and communication, Publ. John Wiley \& Sons, 1965.
+    \bibitem{Papoulis}
+    A. Papoulis, Signal analysis. New York : McGraw-Hill, 1977.
+    \bibitem{Panter}
+    P.F. Panter, `Modulation, Noise and Spectral Analysis', McGraw-Hill, 1966.
     \bibitem{Pedersen}
     F. Pedersen, Beam Loading Effects in the CERN PS Booster, IEEE Trans. Nucl. Sci. 22, 3, June 1975.
     \bibitem{Ninomiya}

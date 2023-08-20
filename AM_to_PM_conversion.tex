@@ -3,8 +3,8 @@
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb,amsthm}
 %\usepackage{mathtools}
-%\usepackage{siunitx}
-\usepackage{physics}
+\usepackage{siunitx}
+%\usepackage{physics}
 \usepackage{bm}
 
 \usepackage{ulem}
@@ -21,12 +21,19 @@
 
 \renewcommand{\today}{\the\year/\the\month/\the\day}
 \renewcommand{\contentsname}{Contents}
-\renewcommand{\abstractname}{Abstract}
-\renewcommand{\refname}{References}
+%\renewcommand{\abstractname}{Abstract}
+%\renewcommand{\refname}{References}
 \renewcommand{\figurename}{Fig.~}
 \renewcommand{\tablename}{Table~}
 
 %\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
+% Keywords command
+\providecommand{\keywords}[1]
+{
+  \small	
+  \textbf{\textit{索引用語---}} #1
+}
 
 \begin{document}
 \title{AM to PM conversion of linear filters}
@@ -36,13 +43,161 @@
 %%\clearpage
 
 \begin{abstract}
-    変調信号がフィルターを通過する際の振幅変調と位相変調の間の変換が分析されます。変調された側波帯の振幅がフィルタをどのように通過するか、および AM と PM が側波帯の 1つで反対の符号をどのように相互作用するかの違い。AM と PM の間の変換がモデル化され、散乱モデルと線形フィルター伝達関数に基づく2つの関数の評価が提供されます。システム帯域幅の影響が分析され、AM と PM の分離を確実にするための経験則が開発されます。
+    変調信号がフィルターを通過する際の振幅変調と位相変調の間の変換が分析されます。変調された側波帯の振幅がフィルタをどのように通過するか、および AM と PM が側波帯の 1つで反対の符号をどのように相互作用するかの違い。AMとPMの間の変換がモデル化され、散乱モデルと線形フィルター伝達関数に基づく2つの関数の評価が提供されます。システム帯域幅の影響が分析され、AM と PM の分離を確実にするための経験則が開発されます。
+
+    変調された信号がフィルタを通過する際の振幅変調と位相変調の変換について分析する。変調されたサイドバンドの振幅がどのようにフィルタを通過するかの違いや、AMとPMがそのサイドバンドの1つに対してどのように反対の符号を持つかが相互作用する。AMとPM間の変換をモデル化し、散乱モデルを提供し、線形フィルタの伝達関数に基づく2つの関数を評価する。システムの帯域幅の影響を分析し、AMとPMの分離を確実にするための経験則を開発しました。
 \end{abstract}
 
-\section{INTRODUCTION}
-%
+\keywords{振幅変調, 位相変調, 位相雑音}
 
+\section{序論}
+
+システム・コンポーネントの振幅変調と位相変調の相互作用は、高性能システムの達成位相雑音性能を著しく制限する可能性がある。本稿では、リニア・フィルターにおいてこのような変換がどのように起こるかを分析するために、簡略化されたアプローチを提供することを目的とする。このような変換がリニアフィルターでどのように起こり得るかを分析するための簡略化されたアプローチを容易にすることを目的としています。AMノイズとPMノイズの両方に対する懸念は、\cite{ref:1}に示されています。\cite{ref:1}に示されており、AMノイズからPMノイズへの変換、従ってAMノイズを制約内に抑える必要性についても触れている。この論文では、非線形増幅回路の動作が扱われているが、本稿の焦点は、厳密には線形動作と、システム設計を支援するためにこれを解析する簡略化されたアプローチである。
+
+\section{変調の基礎}
+振幅変調の場合、側波帯は古典的な三角法を使用して次のように表現できる。
 %
+\begin{equation}
+    \begin{split}
+        X(t)    &= A (1+a\cos\omega_m t)\cos\omega_c t\\
+        &= A\cos\omega_c t + \frac{A}{2}\cos(\omega_c - \omega_m) + \frac{A}{2}\cos(\omega_c + \omega_m) t
+        \label{eq:am}
+    \end{split}
+\end{equation}
+%
+ただし、$A$は振幅、$a$は振幅変調指数、$\omega_c$は搬送波の角周波数、$\omega_m$は変調の角周波数である。
+
+同様に、位相変調については、高次の項は重要でないと仮定して、Bessel関数\cite{ref:2}から書くことができます:
+%
+\begin{equation}
+    \begin{split}
+        X(t)    &= A \cos p \sin\omega_m t + \omega_c t \\
+        &= A J_0(p)\cos\omega_c + A J_{-1}(p)\cos(\omega_c-\omega_m) t + A J_1(p)\cos(\omega_c + \omega_m) t
+        \label{eq:pm}
+    \end{split}
+\end{equation}
+%
+以下の解析では、変調指数が低いと仮定しているため、位相変調のキャリア強度への影響は軽微であると考えられる。従って、ベッセル多項式の2次以上の次数は打ち消すことができ、2次以上のサイドバンドの省略も安全に行うことができます。従って、残りの近似は次のようになる:
+%
+\begin{equation}
+    X(t)    = A\cos\omega_c t - \frac{A}{2}\cos(\omega_c - \omega_m) + \frac{A}{2}\cos(\omega_c + \omega_m) t
+    \label{eq:nfm}
+\end{equation}
+%
+\section{AMとPMの共通モデル}
+%
+AMとPMがどのように側帯域を作るかの類似性を考えると、下側側帯域の符号が異なるだけで、下側側帯域LSB $A_{LSB}$と上側側帯域USB $A_{USB}$の振幅が、それぞれの変調指数$a$と$p$、および搬送波振幅$A$の形で直接表現できるAMとPMの同時モデルを作ることができる。
+%
+\begin{align}
+    A_{LSB} & = A\frac{a}{2} - A\frac{p}{2} \\
+    A_{USB} & = A\frac{a}{2} + A\frac{p}{2}
+\end{align}
+%
+同様に、それぞれの変調指数は、同じ変調周波数に対するLSBとUSBの振幅とキャリアの振幅で表すことができる:
+%
+\begin{align}
+    a = \frac{A_{USB} + A_{LSB}}{A} \\
+    p = \frac{A_{USB} - A_{LSB}}{A}
+\end{align}
+%
+これは、キャリアの2つのサイドバンド、またはキャリアのAM変調とPM変調の間の直交線形変換を表している。何をするかによって、これらのビューのいずれかでそれを表示し、両方の振幅を持っている限り、我々は他のビューに変換することができます。
+%
+\section{線形フィルタにおけるAMとPM}
+%
+線形フィルター$H(s)$と振幅変調と位相変調を持つ信号があるとする。この問いに答えるには、まず変調指数をサイドバンドの相対強度$A_{LSB}$と$A_{USB}$に変換する必要がある。これによって、サイドバンド周波数に対するフィルタ応答は出力強度$A^{\prime}_{LSB}$と$A^{\prime}_{USB}$を生成し、キャリアは出力強度$A^{\prime}_C$を生成します。したがって、次のようになる。
+%
+\begin{align}
+    \omega_u         & = \omega_c + \omega_m                                    \\
+    \omega_l         & = \omega_c - \omega_m                                    \\
+    A_{LSB}          & = A\frac{a-p}{2}                                         \\
+    A_{USB}          & = A\frac{a+p}{2}                                         \\
+    A^{\prime}_{LSB} & = H(j\omega_l)A_{LSB}                                    \\
+    A^{\prime}_C     & = H(j\omega_c)A                                          \\
+    A^{\prime}_{USB} & = H(j\omega_u)A_{USB}                                    \\
+    a^{\prime}       & = \frac{A^{\prime}_{USB} + A^{\prime}_{LSB}}{A^{\prime}} \\
+    p^{\prime}       & = \frac{A^{\prime}_{USB} - A^{\prime}_{LSB}}{A^{\prime}}
+\end{align}
+%
+したがって、
+%
+\begin{align}
+    a^{\prime} & = \frac{H(j\omega_u)}{H(j\omega_c)}\frac{a+p}{2}+\frac{H(j\omega_l)}{H(j\omega_c)}\frac{a-p}{2}       \\
+    p^{\prime} & = \frac{H(j\omega_u)}{H(j\omega_c)}\frac{a+p}{2}-\frac{H(j\omega_l)}{H(j\omega_c)}\frac{a-p}{2}       \\
+    a^{\prime} & = \frac{H(j\omega_u)+H(j\omega_l)}{2H(j\omega_c)}a + \frac{H(j\omega_u)-H(j\omega_l)}{2H(j\omega_c)}p \\
+    p^{\prime} & = \frac{H(j\omega_u)+H(j\omega_l)}{2H(j\omega_c)}a - \frac{H(j\omega_u)-H(j\omega_l)}{2H(j\omega_c)}p
+\end{align}
+%
+最後の定式化は、AMからAMへの変換とPMからPMへの変換は共通のサイドバンド応答に依存し、AMからPMへの変換とPMからAMへの変換はサイドバンド応答の差分に依存することを明確に示している。これは線形システムの散乱行列として振る舞います。したがって、共通応答と微分応答を定義することによって、さらに単純化することができます。
+%
+\begin{align}
+    H_c(\omega_l, \omega_u) & = \frac{H(j\omega_u)+H(j\omega_l)}{2H(j\omega_c)}       \\
+    H_d(\omega_l, \omega_u) & = \frac{H(j\omega_u)-H(j\omega_l)}{2H(j\omega_c)}       \\
+    a^{\prime}              & =   H_c(\omega_l, \omega_u)a + H_d(\omega_l, \omega_u)p \\
+    p^{\prime}              & =   H_d(\omega_l, \omega_u)a + H_c(\omega_l, \omega_u)p \\
+    \begin{bmatrix}
+        a^{\prime} \\
+        p^{\prime}
+    \end{bmatrix}
+                            & =
+    \begin{bmatrix}
+        H_c & H_d \\
+        H_d & H_c
+    \end{bmatrix}
+    \begin{bmatrix}
+        a \\
+        p
+    \end{bmatrix}
+\end{align}
+%
+AMからPM、PMからAMへのリークはレスポンスの差に依存し、等しい。AMからAM、PMからPMは共通のレスポンスに依存する。しかし、両方ともダンピングに依存し、両方のサイドバンドが十分にダンピングされていれば、両方のダンピングが大きくなります。完全にバランスの取れたフィルター応答は、変調伝達を大きく低下させることなく、相互変調をキャンセルします。
+
+\section{1次のローパスフィルタ}
+
+効果を説明するために、1極のローパスフィルターを考えてみよう。
+%
+\begin{equation}
+    H(s) = \frac{-\omega_0}{s - \omega_0}
+\end{equation}
+%
+分析するには、次の2つの式に挿入する。
+%
+\begin{align}
+    H_c(\omega_l, \omega_u) = \frac{\omega_c^2-\omega_0^2+2j\omega_0\omega_c}{\omega_0^2-\omega_c^2+\omega_m^2 -2j\omega_0\omega_c} \\
+    H_d(\omega_l, \omega_u) = \frac{\omega_c\omega_m+j\omega_0\omega_m}{\omega_0^2-\omega_c^2+\omega_m^2 -2j\omega_0\omega_c}
+\end{align}
+%
+これらは、変調周波数がキャリア周波数に比べて低いと仮定して、キャリアと周波数の関係が異なる場合に評価される:
+%
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{cccc}
+        Condition               & $|H_c|$ & $|H_d|$                                        & $|A^{\prime}_C|$     \\
+        $\omega_0 \ll \omega_c$ & 1       & 0                                              & $A$                  \\
+        $\omega_0 = k \omega_c$ & 1       & $\frac{\omega_m}{k\omega_0}=\frac{f_m}{k f_0}$ & $A$                  \\
+        $\omega_0=\omega_c$     & 1       & $\frac{\omega_m}{k\omega_0}=\frac{f_m}{k f_0}$ & $\frac{A}{\sqrt{2}}$ \\
+        $\omega_0\gg \omega_c$  & 1       & $\frac{\omega_m}{k\omega_0}=\frac{f_m}{k f_0}$ & 0
+    \end{tabular}
+\end{table}
+%
+$|H_c|$の応答は、基本的にすべての条件に対してすべてのパスのものですが、キャリアの振幅がローパスフィルター自体を反射するように減少することに注意してください、したがって、AMからAMへの変換とPMからPMへの変換の両方が、私たちが期待するのと同じパス動作を経験します。さらに、$|H_d|$が$f_m/f_c$ファクターでスケーリングされたハイパス・フィルターを反映していることに注目してください。
+
+最初の条件は、キャリアとサイドバンドがフィルタの通過周波数内にある状況を反映しており、この条件ではクロストークもキャリアの変化もないため、AMからAM、PMからPMへの変換は期待通りに機能します。
+
+第3の条件は、搬送波がフィルタ帯域幅と一致する状況を反映したもので、この条件では振幅が3dB損失し、fm/fc比に比例したクロストークが発生する。したがって、搬送波周波数に設定されたフィルターは、変調周波数に比例して増加するAMからPMへの変換を提供します。したがって、遠距離のAMノイズは遠距離のPMノイズに変換されます。\SI{10}{\MHz}の音源を\SI{100}{\kHz}で変調した場合、変換強度は\SI{-43}{\dB}となります。
+
+2番目の条件は、システム帯域幅を搬送波の$k$倍の比率に増加すると、追加の分離が可能になることを反映するために追加されました。これはすぐにわかります。$k = 10$では、AMからPMへの約\SI{-60}{\dB}の変換強度が提供されます。\SI{10}{\MHz}の同じ\SI{100}{\kHz}。これにより、AMからPMへの変換がシステムパフォーマンスに影響を与えないようにするための単純な経験則アプローチが可能になります。
+
+第4の条件は、システムの帯域幅が搬送波の帯域幅をはるかに下回る極端なケースを反映するために追加された。この条件では、AMからPMへの変換が行われますが、一方でキャリアの減衰が大きく、利得がゼロになり、キャリアとサイドバンドが熱雑音に置き換わります。
+
+\section{結論}
+AMからAM、PMからPM、およびAMからPM、PMからAMのクロストークを解析するための基本的なアプローチが行われ、任意の線形システム$H(s)$の影響を解析することができる2つの$H_C(\omega_c, \omega_m)$と$H_D(\omega_c,\omega_m)$の応答によって要約することができます。
+
+ローパスフィルタの動作では、搬送波周波数がシステム帯域幅に近いか超えている場合は常にAMからPMへのクロストークが見られるが、搬送波周波数がシステム帯域幅よりはるかに小さい場合は見られない。クロストークは変調周波数とともに増加し、比$f_m/f_c$ に比例する。システム帯域幅を、$f_0 = k * f_c$ で定義されるように、搬送波周波数から$k$のファクターでスケーリングすることにより、カップリングファクターはおおよそ $f_m/(k f_c)$ となり、これを経験則として使用することで、AMとPMの間の遠方ノイズに対する十分なアイソレーションを確保することができます。
+
+\section*{謝辞}
+
+NIST BoulderのCraig Nelson、Archita Hati、David Howe、そしてBob Camp、Enrico Rubiola教授、Francois Vernotte教授の継続的なサポートとインスピレーションに感謝したい。この研究の基本的なアイデアは、EFTFやIFCSで開催されたCraig Nelsonの位相雑音チュートリアルから生まれました。
+
 \begin{thebibliography}{9}
     \bibitem{ref:1}
     Eva S. Ferre-Pikal, Fred L. Walls and Craig W. Nelson, Guidelines for Designing BJT Amplifiers with Low 1/f AM and PM noise, April 1997 IEEE Transactions on Ultrasonics Ferroelectrics and Frequency Control 44(2):335 - 343, DOI10.1109/58.585118
@@ -50,6 +205,5 @@
     \bibitem{ref:2}
     L. Rde and B. Westergren, Mathematics Handbook for Science and Engineering, 5th ed., Lund, Sweden: Studentliteratur, 2010.
 \end{thebibliography}
-%
 %
 \end{document}
