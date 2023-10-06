@@ -37,6 +37,12 @@
 
 \chapter{Static Beam Loading}
 \section{Cavityの基礎}
+\subsection{Particle Acceleration in an RF Field}
+\begin{equation}
+    E(z, t) = E(z)\cos(\omega t+\phi)
+\end{equation}
+
+
 \subsection{Power dissipation}
 \begin{equation}
     P_{diss} = \frac{1}{2} \cdot \frac{V_{cav}^2}{R} = \frac{V_{cav}^2}{R_{sh}}
@@ -58,12 +64,12 @@
 \end{figure}
 %
 \begin{equation}
-    V_2 = N\cdot V_1, \; I_2 = \frac{1}{N}\cdot I_1
+    V_{out} = N\cdot V_{in}, \; I_{out} = \frac{1}{N}\cdot I_{in}
 \end{equation}
 %
 したがって、
 \begin{equation}
-    Z_2 = n^2 \cdot Z_1
+    Z_{out} = n^2 \cdot Z_{in}
 \end{equation}
 
 \subsection{Available Power}
@@ -71,7 +77,7 @@
 \begin{figure}[hbt]
     \begin{center}
         \includegraphics[width=\linewidth]{figs/Available_Power.pdf}
-        \caption{理想的なトランスによる入力カップラー.}
+        \caption{Available Power.}
         \label{fig:Available_Power}
     \end{center}
 \end{figure}
